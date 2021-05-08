@@ -1,0 +1,28 @@
+.sign-up-form {
+    min-width: 100px;
+    max-width: 400px;
+    width: 100%;
+}
+
+.form-full-width {
+    width: 100%;
+}
+
+.sign-up-matcard {
+    max-width: 500px;
+    transition: none !important;
+    box-shadow: none !important;
+    margin-top: 20px;
+    background: none;
+}
+
+.mat-toolbar-navigation {
+    background: none;
+}
+
+body {
+    background: url(./Backgrounds/joanna-kosinska-Prfs32wh-o4-unsplash.jpg)  no-repeat center center fixed;
+    background-repeat: no-repeat;
+    /* Do not repeat the image */
+    background-size: cover;
+}
