@@ -1,1 +1,68 @@
-<p>user-login works!</p>
+<!DOCTYPE html>
+<html lang="en">
+
+<body>
+    <!-- nav bar implementation -->
+    <div class="nav-bar">
+        <mat-toolbar class="mat-toolbar-navigation">
+            <span style="margin-left: 10px; cursor: pointer">
+                <mat-icon aria-hidden="false" aria-label="Hungry Bird" style="top: 5px;
+                position: relative;">tapas</mat-icon>
+                <span class="hide-for-mobile-devices">&nbsp; Hungry Bird</span>
+            </span>
+            <span class="nav-bar-spacer"></span>
+            <span>
+                <button routerLink="/landing-page" routerLinkActive="active" mat-stroked-button
+                    matTooltip="Sign up with Hungry Bird" type="submit" style="border: none;">Sign up</button>
+            </span>
+            <span>
+                <button mat-stroked-button matTooltip="About Us" class="hide-for-mobile-devices" type="submit" style="border: none;" (click)="openDialogforAboutUs()">About</button>
+            </span>
+        </mat-toolbar>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-1 col-md-2 col-lg-4 ">
+            </div>
+            
+            <div class="col-sm-1 col-md-2 col-lg-4 ">
+            </div>
+            <div class="col-sm-10 col-md-8 col-lg-4" style="padding-top: 75px;">
+                <mat-card class="sign-in-matcard">
+                    <mat-card-title class="sign-up-title" style="margin-bottom: 20px;"> Sign in to your account</mat-card-title>
+                    <mat-card-content style="margin-bottom: 20px;">
+                        <form class="sign-in-form">
+                            <div class="sign-in-form-div">
+                                <div class="input-email-id">
+                                    <mat-form-field class="form-full-width">
+                                        <mat-label>Email</mat-label>
+                                        <input type="email" matInput placeholder="Ex. abc@example.com">
+                                    </mat-form-field>
+                                </div>
+                                <div class="input-password">
+                                    <mat-form-field class="form-full-width">
+                                        <mat-label>Password</mat-label>
+                                        <input type="password" matInput placeholder="Please enter your password">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </form>
+                    </mat-card-content>
+                    <mat-card-actions>
+                        <span class="sign-in-button">
+                            <button mat-stroked-button matTooltip="Clicking on this logs you into Hungry Bird account" type="submit">Login</button>
+                        </span>
+                        <span class="forgot-password">
+                            <a matTooltip="No worries!! We will help you" type="submit" style="color: inherit;">Forgot password?</a>
+                        </span>
+                    </mat-card-actions>
+                </mat-card>
+            </div>
+        </div>
+    </div>
+    <div>
+
+    </div>
+</body>
+
+</html>

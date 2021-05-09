@@ -1,26 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
 
+<head>
+    <title>Signup Page</title>
+</head>
+
 <body>
     <!-- nav bar implementation -->
     <div class="nav-bar">
         <mat-toolbar class="mat-toolbar-navigation">
-            <span style="margin-left: 10px;">
+            <span style="margin-left: 10px; cursor: pointer;">
                 <mat-icon aria-hidden="false" aria-label="Hungry Bird" style="top: 5px;
-                position: relative;">tapas</mat-icon>&nbsp; Hungry Bird
+                position: relative;">tapas</mat-icon>
+                <span class="hide-for-mobile-devices">&nbsp; Hungry Bird</span>
+            </span>
+            <span class="nav-bar-spacer"></span>
+            <span>
+                <button routerLink="/user-login" routerLinkActive="active" mat-stroked-button
+                    matTooltip="Login to your account" type="submit" style="border: none;">Login</button>
+            </span>
+            <span>
+                <button mat-stroked-button class="hide-for-mobile-devices" matTooltip="About Us" type="submit" style="border: none;" (click)="openDialogforAboutUs()">About</button>
             </span>
         </mat-toolbar>
     </div>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-sm-3 col-md-4 col-lg-8 ">
-                <div class="home-page-captions">
-                    <span  style="font-size: 50px;">Who said eating hasn't got any fun...</span><br>
+            <div class="col-sm-4 col-md-8 col-lg-8 ">
+<!--                 <div class="sign-up-page-captions">
+                    <span style="font-size: 50px;">Who said eating hasn't got any fun...</span><br>
                     <span style="font-size: larger; ">With Hungry Bird, get that done!!!</span>
-
-                </div>
+                </div> -->
             </div>
-            <div class="col-sm-9 col-md-8 col-lg-4 ">
+            <div class="col-sm-8 col-md-4 col-lg-4" style="padding-top: 75px;">
                 <mat-card class="sign-up-matcard">
                     <mat-card-title class="sign-up-title"> Sign up with Hungry Bird</mat-card-title>
                     <mat-card-content>
@@ -36,13 +48,14 @@
                                     <mat-form-field class="form-full-width">
                                         <mat-label>Phone number</mat-label>
                                         <span matPrefix>+91 &nbsp;</span>
-                                        <input type="tel" matInput placeholder="Please enter your 10-digit phone number">
+                                        <input type="tel" matInput
+                                            placeholder="Enter your 10-digit phone number">
                                     </mat-form-field>
                                 </div>
                                 <div class="input-email-id">
                                     <mat-form-field class="form-full-width">
                                         <mat-label>Email</mat-label>
-                                        <input type="email" matInput placeholder="Ex. pat@example.com">
+                                        <input type="email" matInput placeholder="Ex. abc@example.com">
                                     </mat-form-field>
                                 </div>
 
@@ -54,7 +67,8 @@
                                 </div>
 
                                 <div class="checkbox-terms-conditions">
-                                    <mat-checkbox class="form-full-width" color="primary">Accept the Terms & Condtions
+                                    <mat-checkbox class="form-full-width" color="primary">
+                                        Accept our&nbsp;<span style="font-weight:bold" (click)="openDialogforTermsAndConditions()">&nbsp;Terms & Conditions&nbsp;</span>
                                     </mat-checkbox>
                                 </div>
                             </div>
@@ -62,14 +76,18 @@
                     </mat-card-content>
                     <mat-card-actions>
                         <div class="sign-up-button">
-                            <button mat-stroked-button matTooltip="Signing up means you accept our Terms & Conditions" type="submit">Sign
-                                                    up</button>
+                            <button mat-stroked-button matTooltip="Clicking on this signs you up with Hungry Bird"
+                                type="submit">Sign
+                                up</button>
                         </div>
                     </mat-card-actions>
 
                 </mat-card>
             </div>
         </div>
+    </div>
+    <div>
+
     </div>
 </body>
 

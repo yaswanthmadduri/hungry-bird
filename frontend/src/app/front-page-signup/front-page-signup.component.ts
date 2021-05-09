@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormsModule, ReactiveFormsModule, Validators, FormBuilder } from '@angular/forms';
-
-
+import {MatDialog} from '@angular/material/dialog';
+import { TermsAndconditionsComponent } from './terms-andconditions/terms-andconditions.component';
+import { AboutUsComponent } from './about-us/about-us.component';
 @Component({
   selector: 'app-front-page-signup',
   templateUrl: './front-page-signup.component.html',
@@ -9,7 +10,7 @@ import { FormGroup, FormControl, FormsModule, ReactiveFormsModule, Validators, F
 })
 export class FrontPageSignupComponent implements OnInit {
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder, public dialog: MatDialog) { }
 
   ngOnInit(): void {
   }
@@ -28,6 +29,15 @@ export class FrontPageSignupComponent implements OnInit {
 
   onClickingSignup() {
     console.log(this.userProfileForm.value, this.emailFormControl.value);
+  }
+
+  /* Opens terms and conditions dialog box */
+  openDialogforTermsAndConditions() {
+    this.dialog.open(TermsAndconditionsComponent);
+  }
+
+  openDialogforAboutUs(){
+    this.dialog.open(AboutUsComponent);
   }
 
 }

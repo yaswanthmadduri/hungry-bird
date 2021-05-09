@@ -20,6 +20,15 @@ import { MatInputModule } from '@angular/material/input';
 import{ MatIconModule } from '@angular/material/icon';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatDialogModule } from '@angular/material/dialog'
+
+
+
+
+import { TermsAndconditionsComponent } from './front-page-signup/terms-andconditions/terms-andconditions.component';
+import { AboutUsComponent } from './front-page-signup/about-us/about-us.component'
+
 
 @NgModule({
   declarations: [
@@ -28,7 +37,9 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     UserLoginComponent,
     HomePageComponent,
     UserCartComponent,
-    FoodListComponent
+    FoodListComponent,
+    TermsAndconditionsComponent,
+    AboutUsComponent
   ],
   imports: [
     BrowserModule,
@@ -45,7 +56,9 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     MatInputModule,
     MatIconModule,
     MatGridListModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatDatepickerModule,
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]

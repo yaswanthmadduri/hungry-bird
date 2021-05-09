@@ -1,0 +1,51 @@
+body {
+    background: url(../../assets/backgrounds/undraw_barbecue_3x93.svg) no-repeat center center fixed;
+    background-repeat: no-repeat;
+    /* Do not repeat the image */
+    min-width: fit-content;
+    background-position-x: left;
+    background-position-y: bottom;
+    background-size: auto;
+}
+
+
+
+.forgot-password{
+    font-size: 14px;
+    padding-left: 75px;
+}
+
+.sign-in-form {
+    min-width: 100px;
+    max-width: 400px;
+    width: 100%;
+}
+
+.form-full-width {
+    width: 100%;
+}
+
+.sign-in-matcard {
+    max-width: 500px;
+    transition: none !important;
+    background: #f9fafbe0;
+    border-radius: 15px;
+    margin: auto;
+    min-width: fit-content;
+    max-width: fit-content;
+}
+
+.mat-toolbar-navigation {
+    background: #f9fafbe0;
+}
+
+.nav-bar-spacer {
+    flex: 1 1 auto;
+}
+
+
+@media (max-width: 425px) {
+    .hide-for-mobile-devices {
+      display: none;
+    }
+}

@@ -3,3 +3,24 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+
+.mat-form-field-label{
+    color:rgb(49, 49, 49) !important;
+  }
+  .mat-form-field-underline{
+    background-color:rgb(49, 49, 49) !important;
+  }
+  .mat-input-element{
+    caret-color: rgb(49, 49, 49) !important;
+}
+.mat-focused{
+    color: rgb(49, 49, 49) !important;
+}
+.mat-form-field-ripple{
+    background-color: rgb(49, 49, 49) !important;
+}
+.mat-checkbox-checked.mat-primary .mat-checkbox-background{
+    background-color: rgb(49, 49, 49) !important;
+}
