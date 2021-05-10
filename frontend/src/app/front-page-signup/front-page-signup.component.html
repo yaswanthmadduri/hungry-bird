@@ -43,7 +43,7 @@
                                     <mat-form-field class="form-full-width">
                                         <mat-label>Full name</mat-label>
                                         <input type="text" name="fullName" formControlName="fullName" matInput
-                                            placeholder="Enter your full name">
+                                            placeholder="Enter your full name" #fullName>
 
                                         <!-- checking if full name is valid or not -->
 
@@ -68,7 +68,7 @@
                                         <mat-label>Phone number</mat-label>
                                         <span matPrefix>+91 &nbsp;</span>
                                         <input matInput type="number" name="phoneNumber" formControlName="phoneNumber"
-                                            placeholder="Enter your 10-digit phone number" #input>
+                                            placeholder="Enter your 10-digit phone number" #phoneNumber>
 
                                         <!-- Validating the phone number -->
                                         <mat-error
@@ -95,24 +95,42 @@
                                             <input type="email" name="emailId" formControlName="emailId" matInput
                                                 placeholder="Ex. abc@mail.com">
                                             <!-- Validating email -->
-                                            <mat-error *ngIf="userProfileForm.hasError('email') && !userProfileForm.hasError('required')">
-                                                Please enter a valid email address
-                                              </mat-error>
-                                              <mat-error *ngIf="userProfileForm.hasError('required')">
-                                                Email is <strong>required</strong>
-                                              </mat-error>
-                                            
+                                            <mat-error
+                                                *ngIf="userProfileForm.get('emailId').invalid && (userProfileForm.get('emailId').dirty || userProfileForm.get('emailId').touched)">
+                                                <div *ngIf="userProfileForm.get('emailId').errors.required">
+                                                    Your Email ID is necessary for logging in.
+                                                </div>
+                                                <div *ngIf="userProfileForm.get('emailId').errors.email">
+                                                    Please enter a valid Email ID.
+                                                </div>
+                                            </mat-error>
+
                                         </mat-form-field>
                                     </div>
 
+                                    <!-- Taking in the password -->
                                     <div class="form-group input-password">
                                         <mat-form-field class="form-full-width">
                                             <mat-label>Password</mat-label>
-                                            <input matInput [type]="hidePassword ? 'password' : 'text'"
-                                                placeholder="Please enter a Password">
-                                            <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword">
+                                            <input matInput [type]="hidePassword ? 'password' : 'text'" name="password"
+                                                formControlName="password" placeholder="Please enter a Password">
+                                            <!-- <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword">
                                                 <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
                                             </button>
+ -->
+                                            <!-- Validating the password -->
+                                            <mat-error
+                                                *ngIf="userProfileForm.get('password').invalid && (userProfileForm.get('password').dirty || userProfileForm.get('password').touched)">
+                                                <div *ngIf="userProfileForm.get('password').errors.required">
+                                                    Your password is necessary for logging in.
+                                                </div>
+                                                <div *ngIf="userProfileForm.get('password').errors.maxlength">
+                                                    Password cannot be more than 20 letters
+                                                </div>
+                                                <div *ngIf="userProfileForm.get('password').errors.minlength">
+                                                    Password cannot be less than 6 letters
+                                                </div>
+                                            </mat-error>
                                         </mat-form-field>
                                     </div>
                                 </div>
@@ -140,8 +158,10 @@
             </div>
         </div>
     </div>
-    <div>
 
+    <!-- Showing user that he is successfully signed up -->
+    <div *ngIf="signedupSuccessfully">
+        
     </div>
 </body>
 

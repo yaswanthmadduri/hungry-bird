@@ -4,6 +4,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { TermsAndconditionsComponent } from './terms-andconditions/terms-andconditions.component';
 import { AboutUsComponent } from './about-us/about-us.component';
 import { HttpClient } from '@angular/common/http';
+import { FrontPageSignupService } from './front-page-signup.service'
+import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-front-page-signup',
   templateUrl: './front-page-signup.component.html',
@@ -13,8 +15,11 @@ export class FrontPageSignupComponent implements OnInit {
 
   userProfileForm: any;
   hidePassword: boolean = true;
+  signedupSuccessfully: boolean = false;
+  horizontalPosition: MatSnackBarHorizontalPosition = 'right';
+  verticalPosition: MatSnackBarVerticalPosition = 'top';
 
-  constructor(private formBuilder: FormBuilder, public dialog: MatDialog, private httpClientRequest: HttpClient
+  constructor(private formBuilder: FormBuilder, public dialog: MatDialog, private signupService: FrontPageSignupService, private _snackBar: MatSnackBar
   ) { }
 
   ngOnInit(): void {
@@ -23,24 +28,10 @@ export class FrontPageSignupComponent implements OnInit {
       phoneNumber: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(10)]],
       termsCheckbox: ['', [Validators.required]],
       emailId: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.minLength(6), Validators.maxLength(15)]],
+      password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(20)]],
     });
 
 
-  }
-
-
-
-  onClickingSignup() {
-    console.log(this.userProfileForm.value, this.userProfileForm.get('fullName').value);
-    var signupFormData: any = new FormData();
-    signupFormData.append("Name", this.userProfileForm.get('fullName').value);
-    signupFormData.append("Email ID", this.userProfileForm.get('emailId').value);
-    this.httpClientRequest.post('http://localhost:3000/users', signupFormData).subscribe(
-      (response) => console.log(response),
-      (error) => console.log(error)
-    )
-    console.log(signupFormData)
   }
 
   /* Opens terms and conditions dialog box */
@@ -52,4 +43,19 @@ export class FrontPageSignupComponent implements OnInit {
     this.dialog.open(AboutUsComponent);
   }
 
+  onClickingSignup() {
+    this.signedupSuccessfully = false;
+    if(this.userProfileForm.value){
+      this.signupService.signupTheUser(this.userProfileForm.value).subscribe(
+        (response) => {
+          console.log("Success, signed up",response);
+          this.signedupSuccessfully = true;
+          this._snackBar.open('Wow! You are signed up now. You can login to your Hungry Bird account at any time :)','', { duration: 5000 });
+        },
+        (error) =>{
+           console.log("Some error occured", error);
+        }
+      )
+    }
+  }
 }

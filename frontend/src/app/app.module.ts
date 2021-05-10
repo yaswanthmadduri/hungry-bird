@@ -25,8 +25,8 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatDialogModule } from '@angular/material/dialog'
-
-
+import { MatSnackBarModule } from '@angular/material/snack-bar'
+ 
 
 
 import { TermsAndconditionsComponent } from './front-page-signup/terms-andconditions/terms-andconditions.component';
@@ -62,6 +62,7 @@ import { AboutUsComponent } from './front-page-signup/about-us/about-us.componen
     MatToolbarModule,
     MatDatepickerModule,
     MatDialogModule,
+    MatSnackBarModule,
     HttpClientModule
   ],
   providers: [],

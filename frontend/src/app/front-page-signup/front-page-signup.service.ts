@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { FrontPageSignupComponent } from './front-page-signup.component';
 
 @Injectable({
   providedIn: 'root'
@@ -9,12 +8,14 @@ import { FrontPageSignupComponent } from './front-page-signup.component';
 export class FrontPageSignupService {
 
 
-  baseURL: string = "http://localhost:3000/";
+  baseURL: string = "http://localhost:3000/users";
 
 
-  constructor( private http: HttpClient ) { }
+  constructor( private httpClientRequest: HttpClient ) { }
 
-  
 
+signupTheUser(signupFormData: any){
+  return this.httpClientRequest.post<any>(this.baseURL, signupFormData);
+}
 
 }

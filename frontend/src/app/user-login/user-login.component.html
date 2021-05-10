@@ -31,18 +31,50 @@
                 <mat-card class="sign-in-matcard">
                     <mat-card-title class="sign-up-title" style="margin-bottom: 20px;"> Sign in to your account</mat-card-title>
                     <mat-card-content style="margin-bottom: 20px;">
-                        <form class="sign-in-form">
+
+                        <!-- Taking in the user credentials for login -->
+                        <form class="sign-in-form" [formGroup]="userLoginForm" (ngSubmit)="onClickingLogin()">
                             <div class="sign-in-form-div">
+                                 <!-- Taking in the email id -->
                                 <div class="input-email-id">
                                     <mat-form-field class="form-full-width">
                                         <mat-label>Email</mat-label>
-                                        <input type="email" matInput placeholder="Ex. abc@example.com">
+                                        <input type="email" matInput placeholder="Ex. abc@example.com" name="emailId" formControlName="emailId">
+                                         <!-- Validating email -->
+                                         <mat-error
+                                         *ngIf="userLoginForm.get('emailId').invalid && (userLoginForm.get('emailId').dirty || userLoginForm.get('emailId').touched)">
+                                         <div *ngIf="userLoginForm.get('emailId').errors.required">
+                                             Your Email ID is required.
+                                         </div>
+                                         <div *ngIf="userLoginForm.get('emailId').errors.email">
+                                             Please enter a valid Email ID.
+                                         </div>
+                                     </mat-error>
                                     </mat-form-field>
                                 </div>
-                                <div class="input-password">
+                                <!-- Taking in the password -->
+                                <div class="form-group input-password">
                                     <mat-form-field class="form-full-width">
                                         <mat-label>Password</mat-label>
-                                        <input type="password" matInput placeholder="Please enter your password">
+                                        <input matInput [type]="hidePassword ? 'password' : 'text'" name="password"
+                                            formControlName="password" placeholder="Please enter a Password">
+                                        <!-- <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword">
+                                            <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+                                        </button>
+-->
+                                        <!-- Validating the password -->
+                                        <mat-error
+                                            *ngIf="userLoginForm.get('password').invalid && (userLoginForm.get('password').dirty || userLoginForm.get('password').touched)">
+                                            <div *ngIf="userLoginForm.get('password').errors.required">
+                                                Your password is necessary for logging in.
+                                            </div>
+                                            <div *ngIf="userLoginForm.get('password').errors.maxlength">
+                                                Password cannot be more than 20 letters
+                                            </div>
+                                            <div *ngIf="userLoginForm.get('password').errors.minlength">
+                                                Password cannot be less than 6 letters
+                                            </div>
+                                        </mat-error>
                                     </mat-form-field>
                                 </div>
                             </div>
@@ -50,7 +82,7 @@
                     </mat-card-content>
                     <mat-card-actions>
                         <span class="sign-in-button">
-                            <button mat-stroked-button matTooltip="Clicking on this logs you into Hungry Bird account" type="submit">Login</button>
+                            <button mat-stroked-button matTooltip="Clicking on this logs you into Hungry Bird account" type="submit" [disabled]="!userLoginForm.valid" >Login</button>
                         </span>
                         <span class="forgot-password">
                             <a matTooltip="No worries!! We will help you" type="submit" style="color: inherit;">Forgot password?</a>
