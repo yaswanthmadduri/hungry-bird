@@ -10,6 +10,7 @@ import { HomePageComponent } from './home-page/home-page.component';
 import { UserCartComponent } from './user-cart/user-cart.component';
 import { FoodListComponent } from './food-list/food-list.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 import { MatSliderModule } from '@angular/material/slider';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatCardModule } from '@angular/material/card';
