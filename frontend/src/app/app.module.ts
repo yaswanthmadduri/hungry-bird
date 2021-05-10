@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http'
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -9,6 +10,7 @@ import { UserLoginComponent } from './user-login/user-login.component';
 import { HomePageComponent } from './home-page/home-page.component';
 import { UserCartComponent } from './user-cart/user-cart.component';
 import { FoodListComponent } from './food-list/food-list.component';
+
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { MatSliderModule } from '@angular/material/slider';
@@ -59,7 +61,8 @@ import { AboutUsComponent } from './front-page-signup/about-us/about-us.componen
     MatGridListModule,
     MatToolbarModule,
     MatDatepickerModule,
-    MatDialogModule
+    MatDialogModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
