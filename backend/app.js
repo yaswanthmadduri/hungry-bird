@@ -12,7 +12,7 @@ var app = express();
 const route = require('./routes/routes');
 
 //connecting to mongodb
-mongoose.connect('mongodb://localhost:27017/hungrybird');
+mongoose.connect('mongodb://localhost:27017/hungrybird',{ useUnifiedTopology: true, useNewUrlParser: true });
 
 //on connection to mongodb
 mongoose.connection.on('connected', ()=>{

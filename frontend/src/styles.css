@@ -24,3 +24,12 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .mat-checkbox-checked.mat-primary .mat-checkbox-background{
     background-color: rgb(49, 49, 49) !important;
 }
+
+.mat-snack-bar-container{
+  background-color: #f9fafbe0 !important;
+  color: rgb(49, 49, 49) !important;
+}
+
+.mat-simple-snackbar-action button{
+  color: rgb(49, 49, 49) !important;
+}

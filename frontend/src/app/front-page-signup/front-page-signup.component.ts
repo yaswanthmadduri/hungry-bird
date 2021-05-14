@@ -24,11 +24,11 @@ export class FrontPageSignupComponent implements OnInit {
 
   ngOnInit(): void {
     this.userProfileForm = this.formBuilder.group({
-      fullName: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
-      phoneNumber: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(10)]],
-      termsCheckbox: ['', [Validators.required]],
-      emailId: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(20)]],
+      userName: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
+      userPhoneNumber: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(10)]],
+      termsAccepted: ['', [Validators.required]],
+      userEmailId: ['', [Validators.required, Validators.email]],
+      userPassword: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(20)]],
     });
 
 
@@ -48,9 +48,8 @@ export class FrontPageSignupComponent implements OnInit {
     if(this.userProfileForm.value){
       this.signupService.signupTheUser(this.userProfileForm.value).subscribe(
         (response) => {
-          console.log("Success, signed up",response);
           this.signedupSuccessfully = true;
-          this._snackBar.open('Wow! You are signed up now. You can login to your Hungry Bird account at any time :)','', { duration: 5000 });
+          this._snackBar.open('Wow! You are signed up now. You can login to your Hungry Bird account at any time :)','Okay', { duration: 500000 });
         },
         (error) =>{
            console.log("Some error occured", error);

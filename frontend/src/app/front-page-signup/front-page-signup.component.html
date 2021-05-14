@@ -42,20 +42,20 @@
                                 <div class="input-full-name">
                                     <mat-form-field class="form-full-width">
                                         <mat-label>Full name</mat-label>
-                                        <input type="text" name="fullName" formControlName="fullName" matInput
-                                            placeholder="Enter your full name" #fullName>
+                                        <input type="text" name="userName" formControlName="userName" matInput
+                                            placeholder="Enter your full name" #userName>
 
                                         <!-- checking if full name is valid or not -->
 
                                         <mat-error
-                                            *ngIf="userProfileForm.get('fullName').invalid && (userProfileForm.get('fullName').dirty || userProfileForm.get('fullName').touched)">
-                                            <div *ngIf="userProfileForm.get('fullName').errors.required">
+                                            *ngIf="userProfileForm.get('userName').invalid && (userProfileForm.get('userName').dirty || userProfileForm.get('userName').touched)">
+                                            <div *ngIf="userProfileForm.get('userName').errors.required">
                                                 Your full name is required.
                                             </div>
-                                            <div *ngIf="userProfileForm.get('fullName').errors.maxlength">
+                                            <div *ngIf="userProfileForm.get('userName').errors.maxlength">
                                                 Name cannot be more than 20 characters long.
                                             </div>
-                                            <div *ngIf="userProfileForm.get('fullName').errors.minlength">
+                                            <div *ngIf="userProfileForm.get('userName').errors.minlength">
                                                 Name must be at least 3 characters long.
                                             </div>
                                         </mat-error>
@@ -67,19 +67,19 @@
                                     <mat-form-field class="form-full-width">
                                         <mat-label>Phone number</mat-label>
                                         <span matPrefix>+91 &nbsp;</span>
-                                        <input matInput type="number" name="phoneNumber" formControlName="phoneNumber"
-                                            placeholder="Enter your 10-digit phone number" #phoneNumber>
+                                        <input matInput type="number" name="userPhoneNumber" formControlName="userPhoneNumber"
+                                            placeholder="Enter your 10-digit phone number" #userPhoneNumber>
 
                                         <!-- Validating the phone number -->
                                         <mat-error
-                                            *ngIf="userProfileForm.get('phoneNumber').invalid && (userProfileForm.get('phoneNumber').dirty || userProfileForm.get('phoneNumber').touched)">
-                                            <div *ngIf="userProfileForm.get('phoneNumber').errors.required">
+                                            *ngIf="userProfileForm.get('userPhoneNumber').invalid && (userProfileForm.get('userPhoneNumber').dirty || userProfileForm.get('userPhoneNumber').touched)">
+                                            <div *ngIf="userProfileForm.get('userPhoneNumber').errors.required">
                                                 Your phone number is required for food delivery.
                                             </div>
-                                            <div *ngIf="userProfileForm.get('phoneNumber').errors.maxlength">
+                                            <div *ngIf="userProfileForm.get('userPhoneNumber').errors.maxlength">
                                                 Phone number cannot be more than 10 digits
                                             </div>
-                                            <div *ngIf="userProfileForm.get('phoneNumber').errors.minlength">
+                                            <div *ngIf="userProfileForm.get('userPhoneNumber').errors.minlength">
                                                 Phone number cannot be less than 10 digits
                                             </div>
                                         </mat-error>
@@ -92,15 +92,15 @@
                                     <div class="form-group input-email-id">
                                         <mat-form-field class="form-full-width">
                                             <mat-label>Email</mat-label>
-                                            <input type="email" name="emailId" formControlName="emailId" matInput
+                                            <input type="email" name="userEmailId" formControlName="userEmailId" matInput
                                                 placeholder="Ex. abc@mail.com">
                                             <!-- Validating email -->
                                             <mat-error
-                                                *ngIf="userProfileForm.get('emailId').invalid && (userProfileForm.get('emailId').dirty || userProfileForm.get('emailId').touched)">
-                                                <div *ngIf="userProfileForm.get('emailId').errors.required">
+                                                *ngIf="userProfileForm.get('userEmailId').invalid && (userProfileForm.get('userEmailId').dirty || userProfileForm.get('userEmailId').touched)">
+                                                <div *ngIf="userProfileForm.get('userEmailId').errors.required">
                                                     Your Email ID is necessary for logging in.
                                                 </div>
-                                                <div *ngIf="userProfileForm.get('emailId').errors.email">
+                                                <div *ngIf="userProfileForm.get('userEmailId').errors.email">
                                                     Please enter a valid Email ID.
                                                 </div>
                                             </mat-error>
@@ -108,26 +108,26 @@
                                         </mat-form-field>
                                     </div>
 
-                                    <!-- Taking in the password -->
+                                    <!-- Taking in the userPassword -->
                                     <div class="form-group input-password">
                                         <mat-form-field class="form-full-width">
                                             <mat-label>Password</mat-label>
-                                            <input matInput [type]="hidePassword ? 'password' : 'text'" name="password"
-                                                formControlName="password" placeholder="Please enter a Password">
+                                            <input matInput [type]="hidePassword ? 'userPassword' : 'text'" name="userPassword"
+                                                formControlName="userPassword" placeholder="Please enter a Password">
                                             <!-- <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword">
                                                 <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
                                             </button>
  -->
                                             <!-- Validating the password -->
                                             <mat-error
-                                                *ngIf="userProfileForm.get('password').invalid && (userProfileForm.get('password').dirty || userProfileForm.get('password').touched)">
-                                                <div *ngIf="userProfileForm.get('password').errors.required">
+                                                *ngIf="userProfileForm.get('userPassword').invalid && (userProfileForm.get('userPassword').dirty || userProfileForm.get('userPassword').touched)">
+                                                <div *ngIf="userProfileForm.get('userPassword').errors.required">
                                                     Your password is necessary for logging in.
                                                 </div>
-                                                <div *ngIf="userProfileForm.get('password').errors.maxlength">
+                                                <div *ngIf="userProfileForm.get('userPassword').errors.maxlength">
                                                     Password cannot be more than 20 letters
                                                 </div>
-                                                <div *ngIf="userProfileForm.get('password').errors.minlength">
+                                                <div *ngIf="userProfileForm.get('userPassword').errors.minlength">
                                                     Password cannot be less than 6 letters
                                                 </div>
                                             </mat-error>
@@ -137,8 +137,8 @@
 
                                 <!-- Taking consent for terms and conditions -->
                                 <div class="checkbox-terms-conditions">
-                                    <mat-checkbox class="form-full-width" name="termsCheckbox"
-                                        formControlName="termsCheckbox" color="primary">
+                                    <mat-checkbox class="form-full-width" name="termsAccepted"
+                                        formControlName="termsAccepted" color="primary">
                                         Accept our&nbsp;<span style="font-weight:bold"
                                             (click)="openDialogforTermsAndConditions()">&nbsp;Terms &
                                             Conditions&nbsp;</span>
@@ -161,7 +161,7 @@
 
     <!-- Showing user that he is successfully signed up -->
     <div *ngIf="signedupSuccessfully">
-        
+
     </div>
 </body>
 

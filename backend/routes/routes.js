@@ -52,14 +52,14 @@ router.put('/restaurant/food-item-list/:itemName', (req, res, next) => {
             itemQuantityAvailable: req.body.itemQuantityAvailable,
             itemQuantityBought: req.body.itemQuantityBought
         },
-        function (err,res) {
-            if(err){
+        function(err, res) {
+            if (err) {
                 res.json(err);
             }
-            else{
-                res.json({res: "item info updated"});
+            else {
+                res.json({ res: "item info updated" });
             }
-            
+
         }
     })
 
@@ -67,28 +67,29 @@ router.put('/restaurant/food-item-list/:itemName', (req, res, next) => {
 
 
 router.delete('/restaurant/food-item-list/:itemName', (req, res, next) => {
-    foodItem.findByIdAndDelete({ "itemName": req.params.itemName }, 
-        function (err,res) {
-            if(err){
+    foodItem.findByIdAndDelete({ "itemName": req.params.itemName },
+        function (err, res) {
+            if (err) {
                 res.json(err);
             }
-            else{
-                res.json({res: "item deleted from list"});
+            else {
+                res.json({ res: "item deleted from list" });
             }
-            
+
         });
 });
 
 ////////////// USER INFORMATION //////////////////////////////////////////
 
 //Posting new user signup data to db.
-router.post('/user-signup', (req, res, next)=>{
+router.post('/user-signup', (req, res, next) => {
     let newuserInfo = new userInfo({
         userEmailId: req.body.userEmailId,
         userPassword: req.body.userPassword,
         userName: req.body.userName,
         userPhoneNumber: req.body.userPhoneNumber,
-        termsAccepted: req.body.termsAccepted
+        termsAccepted: req.body.termsAccepted,
+        signedUp: true
     });
 
     newuserInfo.save((err, newuser) => {
@@ -96,14 +97,13 @@ router.post('/user-signup', (req, res, next)=>{
             res.json(err);
         }
         else {
-            res.json({ message: "User signed up successfully" });
+            res.json({ message: "User has been signed up successfully" });
         }
     });
 });
-
 //Getting all the user info from the db.
 
-router.get('/all-user-data', (req, res, next)=>{
+usersintheDB = router.get('/all-user-data', (req, res, next) => {
 
     userInfo.find(function (err, users) {
         if (err) {
@@ -118,36 +118,36 @@ router.get('/all-user-data', (req, res, next)=>{
 //update user password in database
 router.put('/user-info/change-password/:userEmailId', (req, res, next) => {
     userInfo.findOneAndUpdate(
-        {"userEmailId":req.params.userEmailId}, 
-    { 
-        $set: {
-            userPassword: req.body.userPassword,
+        { "userEmailId": req.params.userEmailId },
+        {
+            $set: {
+                userPassword: req.body.userPassword,
+            }
         }
-    }
-, function( err, users){
-    if (err) {
-        res.json(err);
-    }
-    else {
-        res.json(users);
-    }
-});
-        
+        , function (err, users) {
+            if (err) {
+                res.json(err);
+            }
+            else {
+                res.json(users);
+            }
+        });
+
 
 });
 
 // delete a user account
 router.delete('/user-info/delete-account/:userEmailId', (req, res, next) => {
     userInfo.findOneAndDelete(
-        {"userEmailId": req.params.userEmailId}
-, function( err, users){
-    if (err) {
-        res.json(err);
-    }
-    else {
-        res.json(users);
-    }
-});
+        { "userEmailId": req.params.userEmailId }
+        , function (err, users) {
+            if (err) {
+                res.json(err);
+            }
+            else {
+                res.json(users);
+            }
+        });
 });
 
 //Exporting router module.

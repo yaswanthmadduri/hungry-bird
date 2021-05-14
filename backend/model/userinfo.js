@@ -22,6 +22,9 @@ const userSignupSchema = mongoose.Schema({
     termsAccepted:{
         type: Boolean,
         required: true
+    },
+    signedUp:{
+        type: Boolean
     }
 });
 
