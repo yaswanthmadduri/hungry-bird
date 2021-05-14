@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/yaswanthmadduri/hungry-bird/issues"
   },
-  "homepage": "https://github.com/yaswanthmadduri/hungry-bird#readme"
+  "homepage": "https://github.com/yaswanthmadduri/hungry-bird#readme",
+  "dependencies": {
+    "mongodb": "^3.6.6"
+  }
 }

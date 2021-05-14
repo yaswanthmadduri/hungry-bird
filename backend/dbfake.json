@@ -191,6 +191,14 @@
       "emailId": "nyaswanth@gmail.com",
       "password": "naganaga",
       "id": 24
+    },
+    {
+      "fullName": "M Naga Yaswanth",
+      "phoneNumber": 9441746148,
+      "termsCheckbox": true,
+      "emailId": "nagayaswanth96@gmail.com",
+      "password": "mmmmmmmmmm",
+      "id": 25
     }
   ]
 }
