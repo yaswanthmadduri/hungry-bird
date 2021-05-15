@@ -5,7 +5,11 @@ const foodItem = require('../model/fooditem');
 const userInfo = require('../model/userinfo');
 
 
+const passport = require('passport');
 
+const jwtHelper = require('../config/jwtHelper');
+
+const _ = require('lodash');
 
 
 
@@ -86,20 +90,20 @@ router.delete('/restaurant/food-item-list/:itemName', (req, res, next) => {
 router.post('/user-signup', (req, res, next) => {
     let newuserInfo = new userInfo();
     newuserInfo.email = req.body.userEmailId,
-    newuserInfo.userPassword = req.body.userPassword,
-    newuserInfo.userName = req.body.userName,
-    newuserInfo.userPhoneNumber = req.body.userPhoneNumber,
-    newuserInfo.termsAccepted = req.body.termsAccepted,
-    newuserInfo.signedUp = true,
+        newuserInfo.password = req.body.userPassword,
+        newuserInfo.userName = req.body.userName,
+        newuserInfo.userPhoneNumber = req.body.userPhoneNumber,
+        newuserInfo.termsAccepted = req.body.termsAccepted,
+        newuserInfo.signedUp = true,
 
         newuserInfo.save((err, newuser) => {
             if (!err)
                 res.send(newuser);
             else {
-               if (err.code == 11000)
-                res.status(422).send(['Email address already exists.']);
-            else
-                return next(err);
+                if (err.code == 11000)
+                    res.status(422).send(['Email address already exists.']);
+                else
+                    return next(err);
             }
         });
 });
@@ -150,6 +154,34 @@ router.delete('/user-info/delete-account/:userEmailId', (req, res, next) => {
                 res.json(users);
             }
         });
+});
+
+// authenticating the user to log in. i dont know clearly
+router.post('/authenticate', (req, res, next) => {
+    // call for passport authentication
+    passport.authenticate('local', (err, user, info) => {
+        // error from passport middleware
+        if (err) return res.status(400).json(err);
+        // registered user
+        else if (user) return res.status(200).json({ "token": user.generateJwt() });
+        // unknown user or wrong password
+        else return res.status(404).json(info);
+    })(req, res);
+
+});
+
+
+// displaying the logged in user info i dont knwo whats being done here. 
+
+router.get('/user-profile', jwtHelper.verifyJwtToken, (req, res, next) =>{
+    userInfo.findOne({ _id: req._id },
+        (err, user) => {
+            if (!user)
+                return res.status(404).json({ status: false, message: 'User record not found.' });
+            else
+                return res.status(200).json({ status: true, user : _.pick(user,['userName','email']) });
+        }
+    );
 });
 
 //Exporting router module.

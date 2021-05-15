@@ -45,14 +45,23 @@ export class FrontPageSignupComponent implements OnInit {
 
   onClickingSignup() {
     this.signedupSuccessfully = false;
-    if(this.userProfileForm.value){
+    if (this.userProfileForm.value) {
       this.signupService.signupTheUser(this.userProfileForm.value).subscribe(
         (response) => {
           this.signedupSuccessfully = true;
-          this._snackBar.open('Wow! You are signed up now. You can login to your Hungry Bird account at any time :)','Okay', { duration: 500000 });
+          this._snackBar.open('Wow! You are signed up now. You can login to your Hungry Bird account at any time :)', 'Okay', {
+            horizontalPosition: 'end',
+            verticalPosition: 'top'
+          });
         },
-        (error) =>{
-           console.log("Some error occured", error);
+        (error) => {
+          console.log("Some error occured", error);
+          this.signedupSuccessfully = false;
+          this._snackBar.open(error.error + 'Please login to continue', 'Okay', {
+            horizontalPosition: 'end',
+            verticalPosition: 'top'
+          });
+
         }
       )
     }

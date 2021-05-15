@@ -2,6 +2,10 @@ const mongoose = require('mongoose');
 
 const bcrypt = require('bcryptjs');
 
+const jwt = require('jsonwebtoken');
+
+require('../config/passportconfig');
+
 const userSignupSchema = mongoose.Schema({
 
     email: {
@@ -9,7 +13,7 @@ const userSignupSchema = mongoose.Schema({
         required: true,
         unique: true
     },
-    userPassword: {
+    password: {
         type: String,
         required: [true, 'Password cannot be empty'],
         minlength: [6, 'Password cannot be less than 4 letters'],
@@ -59,8 +63,8 @@ userSignupSchema.path('userPhoneNumber').validate((val) => {
 // Event for encrypting password
 userSignupSchema.pre('save', function (next) {
     bcrypt.genSalt(10, (err, salt) => {
-        bcrypt.hash(this.userPassword, salt, (err, hash) => {
-            this.userPassword = hash;
+        bcrypt.hash(this.password, salt, (err, hash) => {
+            this.password = hash;
             this.saltSecret = salt;
             next();
         });
@@ -68,5 +72,19 @@ userSignupSchema.pre('save', function (next) {
 });
 
 
+// Methods
+userSignupSchema.methods.verifyPassword = function(password){
+    return bcrypt.compareSync(password, this.password);
+}
 
-const userSchema = module.exports = mongoose.model('userinfo', userSignupSchema);
+userSignupSchema.methods.generateJwt = function () {
+    return jwt.sign({ _id: this._id},
+        process.env.JWT_SECRET,
+    {
+        expiresIn: process.env.JWT_EXP
+    });
+}
+
+
+
+const userSchema = module.exports = mongoose.model('userSchema', userSignupSchema);

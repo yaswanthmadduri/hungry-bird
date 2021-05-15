@@ -3,9 +3,13 @@ var mongoose = require("mongoose");
 var bodyParser = require("body-parser");
 var cors = require("cors");
 require('./config/config');
+require('./config/passportconfig');
 
 //instantiating the express
 var app = express();
+
+//instantiating passport
+const passport = require('passport');
 
 
 //importing the route.js file, so that, all routes are transferred to it.
@@ -48,6 +52,8 @@ app.use(express.json());
 app.use(express.urlencoded({
   extended: true
 }));
+
+app.use(passport.initialize());
 
 
 
