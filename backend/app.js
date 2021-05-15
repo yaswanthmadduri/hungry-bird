@@ -2,7 +2,7 @@ var express = require("express");
 var mongoose = require("mongoose");
 var bodyParser = require("body-parser");
 var cors = require("cors");
-
+require('./config/config');
 
 //instantiating the express
 var app = express();
@@ -13,7 +13,8 @@ const route = require('./routes/routes');
 
 //connecting to mongodb
 mongoose.connect('mongodb://localhost:27017/hungrybird',{ useUnifiedTopology: true, useNewUrlParser: true });
-
+mongoose.set('useFindAndModify', false);
+mongoose.set('useCreateIndex', true);
 //on connection to mongodb
 mongoose.connection.on('connected', ()=>{
     console.log("Mongodb connected on port 27017");
@@ -23,6 +24,19 @@ mongoose.connection.on('connected', ()=>{
 mongoose.connection.on('error', (err)=>{
     console.log(err);
 });
+
+
+
+// error handler
+app.use((err, req, res, next) => {
+    if (err.name === 'ValidationError') {
+        var valErrors = [];
+        Object.keys(err.errors).forEach(key => valErrors.push(err.errors[key].message));
+        res.status(422).send(valErrors)
+    }
+});
+
+
 
 //middleware adding - cors
 
@@ -46,6 +60,7 @@ const PORT = 3000;
 app.get('/',(req,res)=>{
     res.send('getting this data for /')
 })
+
 app.listen(PORT, ()=>{
     console.log('server has been started on port: '+ PORT);
 })

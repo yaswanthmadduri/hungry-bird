@@ -9,6 +9,7 @@ const userInfo = require('../model/userinfo');
 
 
 
+
 ////////////////// RESTAURANT DATA/////////////////////////
 
 
@@ -83,23 +84,24 @@ router.delete('/restaurant/food-item-list/:itemName', (req, res, next) => {
 
 //Posting new user signup data to db.
 router.post('/user-signup', (req, res, next) => {
-    let newuserInfo = new userInfo({
-        userEmailId: req.body.userEmailId,
-        userPassword: req.body.userPassword,
-        userName: req.body.userName,
-        userPhoneNumber: req.body.userPhoneNumber,
-        termsAccepted: req.body.termsAccepted,
-        signedUp: true
-    });
+    let newuserInfo = new userInfo();
+    newuserInfo.email = req.body.userEmailId,
+    newuserInfo.userPassword = req.body.userPassword,
+    newuserInfo.userName = req.body.userName,
+    newuserInfo.userPhoneNumber = req.body.userPhoneNumber,
+    newuserInfo.termsAccepted = req.body.termsAccepted,
+    newuserInfo.signedUp = true,
 
-    newuserInfo.save((err, newuser) => {
-        if (err) {
-            res.json(err);
-        }
-        else {
-            res.json({ message: "User has been signed up successfully" });
-        }
-    });
+        newuserInfo.save((err, newuser) => {
+            if (!err)
+                res.send(newuser);
+            else {
+               if (err.code == 11000)
+                res.status(422).send(['Email address already exists.']);
+            else
+                return next(err);
+            }
+        });
 });
 //Getting all the user info from the db.
 
