@@ -6,6 +6,7 @@ import { AboutUsComponent } from './about-us/about-us.component';
 import { HttpClient } from '@angular/common/http';
 import { FrontPageSignupService } from './front-page-signup.service'
 import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-front-page-signup',
   templateUrl: './front-page-signup.component.html',
@@ -19,8 +20,11 @@ export class FrontPageSignupComponent implements OnInit {
   horizontalPosition: MatSnackBarHorizontalPosition = 'right';
   verticalPosition: MatSnackBarVerticalPosition = 'top';
 
-  constructor(private formBuilder: FormBuilder, public dialog: MatDialog, private signupService: FrontPageSignupService, private _snackBar: MatSnackBar
-  ) { }
+  constructor(private formBuilder: FormBuilder,
+    public dialog: MatDialog,
+    private signupService: FrontPageSignupService,
+    private _snackBar: MatSnackBar,
+    private router: Router) { }
 
   ngOnInit(): void {
     this.userProfileForm = this.formBuilder.group({
@@ -49,17 +53,14 @@ export class FrontPageSignupComponent implements OnInit {
       this.signupService.signupTheUser(this.userProfileForm.value).subscribe(
         (response) => {
           this.signedupSuccessfully = true;
-          this._snackBar.open('Wow! You are signed up now. You can login to your Hungry Bird account at any time :)', 'Okay', {
-            horizontalPosition: 'end',
-            verticalPosition: 'top'
-          });
+          this._snackBar.open('Wow! You are signed up now. You can login to your Hungry Bird account at any time :)', 'Okay',);
+          this.router.navigateByUrl('/login');
         },
         (error) => {
           console.log("Some error occured", error);
           this.signedupSuccessfully = false;
-          this._snackBar.open(error.error + 'Please login to continue', 'Okay', {
-            horizontalPosition: 'end',
-            verticalPosition: 'top'
+          this._snackBar.open(error.error + 'Please login to continue', 'Okay',{
+            duration: 3000
           });
 
         }

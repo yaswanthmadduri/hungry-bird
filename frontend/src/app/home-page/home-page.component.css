@@ -1,0 +1,17 @@
+.mat-toolbar-navigation {
+    background: #f9fafbe0;
+}
+
+.nav-bar-spacer {
+    flex: 1 1 auto;
+}
+
+@media (max-width: 425px) {
+    #userFirstName {
+      display: none;
+    }
+}
+
+#nameandiconSpan{
+    cursor: pointer;
+}

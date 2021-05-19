@@ -16,7 +16,7 @@
             </span>
             <span class="nav-bar-spacer"></span>
             <span>
-                <button routerLink="/user-login" routerLinkActive="active" mat-stroked-button
+                <button routerLink="/login" routerLinkActive="active" mat-stroked-button
                     matTooltip="Login to your account" type="submit" style="border: none;">Login</button>
             </span>
             <span>
@@ -67,7 +67,8 @@
                                     <mat-form-field class="form-full-width">
                                         <mat-label>Phone number</mat-label>
                                         <span matPrefix>+91 &nbsp;</span>
-                                        <input matInput type="number" name="userPhoneNumber" formControlName="userPhoneNumber"
+                                        <input matInput type="number" name="userPhoneNumber"
+                                            formControlName="userPhoneNumber"
                                             placeholder="Enter your 10-digit phone number" #userPhoneNumber>
 
                                         <!-- Validating the phone number -->
@@ -92,8 +93,8 @@
                                     <div class="form-group input-email-id">
                                         <mat-form-field class="form-full-width">
                                             <mat-label>Email</mat-label>
-                                            <input type="email" name="userEmailId" formControlName="userEmailId" matInput
-                                                placeholder="Ex. abc@mail.com">
+                                            <input type="email" name="userEmailId" formControlName="userEmailId"
+                                                matInput placeholder="Ex. abc@mail.com">
                                             <!-- Validating email -->
                                             <mat-error
                                                 *ngIf="userProfileForm.get('userEmailId').invalid && (userProfileForm.get('userEmailId').dirty || userProfileForm.get('userEmailId').touched)">
@@ -112,8 +113,9 @@
                                     <div class="form-group input-password">
                                         <mat-form-field class="form-full-width">
                                             <mat-label>Password</mat-label>
-                                            <input matInput [type]="hidePassword ? 'userPassword' : 'text'" name="userPassword"
-                                                formControlName="userPassword" placeholder="Please enter a Password">
+                                            <input matInput [type]="hidePassword ? 'userPassword' : 'text'"
+                                                name="userPassword" formControlName="userPassword"
+                                                placeholder="Please enter a Password">
                                             <!-- <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword">
                                                 <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
                                             </button>

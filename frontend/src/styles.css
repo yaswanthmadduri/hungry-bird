@@ -33,3 +33,17 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .mat-simple-snackbar-action button{
   color: rgb(49, 49, 49) !important;
 }
+
+.mat-menu-panel{
+  border-radius: 10px !important;
+  width: 113px;
+}
+
+.mat-menu-content:not(:empty) {
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
+}
+
+.mat-progress-spinner circle, .mat-spinner circle {
+  stroke: #DC143C;
+  }

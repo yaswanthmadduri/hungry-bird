@@ -1,0 +1,15 @@
+.mat-toolbar-navigation {
+    background: #f9fafbe0;
+}
+.nav-bar-spacer {
+    flex: 1 1 auto;
+}
+
+#errormessagediv{
+    text-align: center;
+}
+
+#errormessage{
+    width: 100%;
+    max-width: 600px;
+}

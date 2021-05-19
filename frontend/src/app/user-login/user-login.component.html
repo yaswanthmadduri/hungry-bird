@@ -12,11 +12,12 @@
             </span>
             <span class="nav-bar-spacer"></span>
             <span>
-                <button routerLink="/landing-page" routerLinkActive="active" mat-stroked-button
+                <button routerLink="/signup" routerLinkActive="active" mat-stroked-button
                     matTooltip="Sign up with Hungry Bird" type="submit" style="border: none;">Sign up</button>
             </span>
             <span>
-                <button mat-stroked-button matTooltip="About Us" class="hide-for-mobile-devices" type="submit" style="border: none;" (click)="openDialogforAboutUs()">About</button>
+                <button mat-stroked-button matTooltip="About Us" class="hide-for-mobile-devices" type="submit"
+                    style="border: none;" (click)="openDialogforAboutUs()">About</button>
             </span>
         </mat-toolbar>
     </div>
@@ -24,32 +25,36 @@
         <div class="row">
             <div class="col-sm-1 col-md-2 col-lg-4 ">
             </div>
-            
+
             <div class="col-sm-1 col-md-2 col-lg-4 ">
             </div>
             <div class="col-sm-10 col-md-8 col-lg-4" style="padding-top: 75px;">
                 <mat-card class="sign-in-matcard">
-                    <mat-card-title class="sign-up-title" style="margin-bottom: 20px;"> Sign in to your account</mat-card-title>
-                    <mat-card-content style="margin-bottom: 20px;">
+                    <mat-card-title class="sign-up-title" style="margin-bottom: 20px;"> Sign in to your account
+                    </mat-card-title>
 
-                        <!-- Taking in the user credentials for login -->
-                        <form class="sign-in-form" [formGroup]="userLoginForm" (ngSubmit)="onClickingLogin()">
+
+                    <!-- Taking in the user credentials for login -->
+                    <form class="sign-in-form" [formGroup]="userLoginForm" (ngSubmit)="onClickingLogin()">
+
+                        <mat-card-content style="margin-bottom: 20px;">
                             <div class="sign-in-form-div">
-                                 <!-- Taking in the email id -->
+                                <!-- Taking in the email id -->
                                 <div class="input-email-id">
                                     <mat-form-field class="form-full-width">
                                         <mat-label>Email</mat-label>
-                                        <input type="email" matInput placeholder="Ex. abc@example.com" name="emailId" formControlName="emailId">
-                                         <!-- Validating email -->
-                                         <mat-error
-                                         *ngIf="userLoginForm.get('emailId').invalid && (userLoginForm.get('emailId').dirty || userLoginForm.get('emailId').touched)">
-                                         <div *ngIf="userLoginForm.get('emailId').errors.required">
-                                             Your Email ID is required.
-                                         </div>
-                                         <div *ngIf="userLoginForm.get('emailId').errors.email">
-                                             Please enter a valid Email ID.
-                                         </div>
-                                     </mat-error>
+                                        <input type="email" matInput placeholder="Ex. abc@example.com" name="email"
+                                            formControlName="email">
+                                        <!-- Validating email -->
+                                        <mat-error
+                                            *ngIf="userLoginForm.get('email').invalid && (userLoginForm.get('email').dirty || userLoginForm.get('email').touched)">
+                                            <div *ngIf="userLoginForm.get('email').errors.required">
+                                                Your Email ID is required.
+                                            </div>
+                                            <div *ngIf="userLoginForm.get('email').errors.email">
+                                                Please enter a valid Email ID.
+                                            </div>
+                                        </mat-error>
                                     </mat-form-field>
                                 </div>
                                 <!-- Taking in the password -->
@@ -78,16 +83,20 @@
                                     </mat-form-field>
                                 </div>
                             </div>
-                        </form>
-                    </mat-card-content>
-                    <mat-card-actions>
-                        <span class="sign-in-button">
-                            <button mat-stroked-button matTooltip="Clicking on this logs you into Hungry Bird account" type="submit" [disabled]="!userLoginForm.valid" >Login</button>
-                        </span>
-                        <span class="forgot-password">
-                            <a matTooltip="No worries!! We will help you" type="submit" style="color: inherit;">Forgot password?</a>
-                        </span>
-                    </mat-card-actions>
+                        </mat-card-content>
+                        <mat-card-actions>
+                            <span class="sign-in-button">
+                                <button mat-stroked-button
+                                    matTooltip="Clicking on this logs you into Hungry Bird account" type="submit"
+                                    [disabled]="!userLoginForm.valid">Login</button>
+                            </span>
+                            <span class="forgot-password">
+                                <a matTooltip="No worries!! We will help you" type="submit"
+                                    style="color: inherit;">Forgot password?</a>
+                            </span>
+                        </mat-card-actions>
+                    </form>
+
                 </mat-card>
             </div>
         </div>

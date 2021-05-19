@@ -1,1 +1,36 @@
-<p>home-page works!</p>
+<body>
+    <!-- nav bar implementation -->
+    <div class="nav-bar">
+        <mat-toolbar class="mat-toolbar-navigation">
+            <span style="margin-left: 10px; cursor: pointer" routerLink="/login" routerLinkActive="active">
+                <mat-icon aria-hidden="false" aria-label="Hungry Bird" style="top: 5px;
+                    position: relative;">tapas</mat-icon>
+                <span class="hide-for-mobile-devices">&nbsp; Hungry Bird</span>
+            </span>
+            <span class="nav-bar-spacer"></span>
+            <span id="nameandiconSpan" [matMenuTriggerFor]="menu">
+                <span id="userFirstName" *ngIf="userDetails">Hi, {{userDetails.userName.split(' ')[0]}}!&nbsp;&nbsp;</span>
+                <span id="userIcon">
+                    <mat-icon aria-hidden="false" aria-label="Example user face"
+                        style="position: relative; top: 5px;">account_circle</mat-icon>
+                </span>
+                <mat-menu #menu="matMenu">
+                    <button mat-menu-item (click) = "onClickingProfile()">My profile</button>
+                    <mat-divider></mat-divider>
+                    <button mat-menu-item (click) = "onClickingCart()">My cart</button>
+                    <mat-divider></mat-divider>
+                    <button mat-menu-item>Favourites</button>
+                    <mat-divider></mat-divider>
+                    <button mat-menu-item (click)="onLogout()">Logout</button>
+                  </mat-menu>
+            </span>
+        </mat-toolbar>
+    </div>
+
+    <div class="user-profile"  *ngIf="showUserProfile && !showCart">
+        <app-user-profile></app-user-profile>
+    </div>
+    <div class="user-cart"  *ngIf="showCart && !showUserProfile">
+        <app-user-cart></app-user-cart>
+    </div>
+</body>
