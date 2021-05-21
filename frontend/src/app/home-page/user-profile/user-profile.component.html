@@ -1,1 +1,34 @@
-<p>user-profile works!</p>
+<!DOCTYPE html>
+<html>
+
+<body>
+    <div class="user-profile-body">
+        <div class="heading">
+            <h1>Profile</h1>
+        </div>
+        <div class="mat-tab-group">
+            <mat-tab-group mat-stretch-tabs dynamicHeight animationDuration="1s">
+                <mat-tab label="User Details">
+                    <div class="mat-card-profile">
+                        <mat-card class="userprofilematcard">
+                            <div class="profilepic">
+                                <img src="../../../assets/Examples/examplepic.jpg" alt="Profile Pic" style="width:100%">
+                                <div class="edit"><mat-icon aria-hidden="false" aria-label="Edit icon">edit</mat-icon></div>
+                            </div>
+                            <div class="details">
+                                <h1>{{userProfile.userName}}</h1>
+                                <p class="email">{{userProfile.email}}</p>
+                                <p class="userPhoneNumber">{{userProfile.userPhoneNumber}}</p>
+                                <p class="dateofbirth">DOB Edit</p>
+                                <p class="Gender">Gender Edit</p>
+                            </div>
+                        </mat-card>
+                    </div>
+                </mat-tab>
+                <mat-tab label="Your Addresses">Content 2</mat-tab>
+            </mat-tab-group>
+        </div>
+    </div>
+</body>
+
+</html>
