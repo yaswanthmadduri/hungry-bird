@@ -60,7 +60,7 @@ app.use(passport.initialize());
 
 //changing the route scope to routes.js
 
-app.use('/api', route)
+app.use('/api/', route)
 
 const PORT = 3000;
 
