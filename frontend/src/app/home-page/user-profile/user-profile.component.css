@@ -1,0 +1,90 @@
+.userprofile {
+    margin: auto;
+    border: 2px solid crimson;
+    min-width: max-content
+}
+
+#profilepicdiv {
+    margin: auto;
+    width: 250px;
+    height: 250px;
+    min-height: 100px;
+    min-width: 100px;
+}
+
+.heading {
+    text-align: center;
+    padding-top: 10px
+}
+
+.title {
+    color: grey;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+h1 {
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.profilepic {
+    cursor: pointer;
+    position: relative;
+    display: inline-block;
+}
+
+h1:hover, button:hover {
+    opacity: 0.9;
+}
+
+img:hover {
+    filter: blur(4px);
+}
+
+.userprofilematcard {
+    width: 350px;
+    margin: auto;
+    text-align: center;
+    max-width: fit-content;
+    margin-top: 20px;
+    border-radius: 5px;
+    border: 0.5px solid darkgray;
+}
+
+.profilepic:hover .edit {
+    display: block;
+}
+
+.edit {
+    right: 42%;
+    top: 44%;
+    position: absolute;
+    display: none;
+}
+
+.editbutton{
+    color: black;
+    background: gray;
+    border: 0.5px solid gray;
+    
+}
+
+
+.example-form {
+    min-width: 150px;
+    max-width: 500px;
+    width: 100%;
+  }
+  
+  .example-full-width {
+    width: 100%;
+  }
+  
+  td {
+    padding-right: 8px;
+  }
+
+  form{
+      margin:auto;
+  }

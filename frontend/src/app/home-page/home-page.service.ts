@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 @Injectable({
@@ -8,7 +8,19 @@ export class HomePageService {
 
   constructor(private httpClientRequest: HttpClient) { }
 
+  baseURL: string = "/api";
+  noAuthHeader = {headers: new HttpHeaders({'NoAuth' : 'True'})};
 
-  baseURL = "http://localhost:3000/api";
-  
+
+  getUserProfile() {
+    return this.httpClientRequest.get(this.baseURL + '/user-profile');
+  }
+
+
+  getCartItemsService(){
+    return this.httpClientRequest.get(this.baseURL+ '/user/cart/foodincart');
+  }
+
+
+
 }

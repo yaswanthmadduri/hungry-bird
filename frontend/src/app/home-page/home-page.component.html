@@ -15,12 +15,9 @@
                         style="position: relative; top: 5px;">account_circle</mat-icon>
                 </span>
                 <mat-menu #menu="matMenu">
-                    <button mat-menu-item (click) = "onClickingProfile()">My profile</button>
-                    <mat-divider></mat-divider>
-                    <button mat-menu-item (click) = "onClickingCart()">My cart</button>
-                    <mat-divider></mat-divider>
+                    <button mat-menu-item (click) = "getProfile()">My profile</button>
+                    <button mat-menu-item (click) = "getCartItems()">My cart</button>
                     <button mat-menu-item>Favourites</button>
-                    <mat-divider></mat-divider>
                     <button mat-menu-item (click)="onLogout()">Logout</button>
                   </mat-menu>
             </span>

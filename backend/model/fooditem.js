@@ -1,9 +1,18 @@
 const mongoose = require('mongoose');
 
-const foodItemsSchema = mongoose.Schema({
+const foodItemsInRestaurantSchema = mongoose.Schema({
 
     itemName:{
         type:String,
+        required: true,
+        unique : true
+    },
+    itemType:{
+        type:String,
+        required: true
+    },
+    itemCost:{
+        type: Number,
         required: true
     },
     itemQuantityAvailable:{
@@ -14,6 +23,7 @@ const foodItemsSchema = mongoose.Schema({
         type: Number,
         required: true
     }
-});
+}
+,{ collection: 'fooditemsinrestaurant'});
 
-const foodItem = module.exports = mongoose.model('foodItem',foodItemsSchema);
+const foodItem = module.exports = mongoose.model('foodItem',foodItemsInRestaurantSchema);

@@ -43,7 +43,7 @@ const userSignupSchema = mongoose.Schema({
     saltSecret: {
         type: String
     }
-});
+},{ collection: 'users'});
 
 
 // Custom validation for email

@@ -3,6 +3,7 @@ var router = express.Router();
 
 const foodItem = require('../model/fooditem');
 const userInfo = require('../model/userinfo');
+const foodInCart = require('../model/foodincart');
 
 
 const passport = require('passport');
@@ -19,7 +20,7 @@ const _ = require('lodash');
 
 
 // retrieving food available at the restaurant from database
-router.get('/restaurant/available-food-items', (req, res, next) => {
+router.get('/restaurant/available-food-items',(req, res, next) => {
     foodItem.find(function (err, items) {
         if (err) {
             res.json(err);
@@ -31,19 +32,23 @@ router.get('/restaurant/available-food-items', (req, res, next) => {
 });
 
 // posting new food in the restaurant to database
-router.post('/restaurant/add-item-to-list', (req, res, next) => {
-    let newFoodItem = new foodItem({
-        itemName: req.body.itemName,
-        itemQuantityAvailable: req.body.itemQuantityAvailable,
-        itemQuantityBought: req.body.itemQuantityBought
-    });
+router.post('/restaurant/add-item-to-list',jwtHelper.verifyJwtToken, (req, res, next) => {
+    let newFoodItem = new foodItem();
+    newFoodItem.itemName = req.body.itemName,
+        newFoodItem.itemQuantityAvailable = req.body.itemQuantityAvailable,
+        newFoodItem.itemQuantityBought = req.body.itemQuantityBought,
+        newFoodItem.itemCost = req.body.itemCost,
+        newFoodItem.itemType = req.body.itemType
 
+        
     newFoodItem.save((err, newitem) => {
-        if (err) {
-            res.json(err);
-        }
+        if (!err)
+            res.send(newitem + "Item has been added to the available list");
         else {
-            res.json({ message: "Item has been added to the available list" });
+            if (err.code == 11000)
+                res.status(422).send([newFoodItem.itemName + ' already exists.']);
+            else
+                return next(err);
         }
     });
 });
@@ -52,21 +57,21 @@ router.post('/restaurant/add-item-to-list', (req, res, next) => {
 //update food-item availability in the restuarant in database
 router.put('/restaurant/food-item-list/:itemName', (req, res, next) => {
 
-    foodItem.findOneAndUpdate({ "itemName": req.params.itemName }, {
-        $set: {
-            itemQuantityAvailable: req.body.itemQuantityAvailable,
-            itemQuantityBought: req.body.itemQuantityBought
-        },
-        function(err, res) {
+    foodItem.findOneAndUpdate(
+        { "itemName": req.params.itemName },
+        {
+            $set: {
+                itemQuantityAvailable: req.body.itemQuantityAvailable
+            }
+        }
+        , function (err, updateditem) {
             if (err) {
                 res.json(err);
             }
             else {
-                res.json({ res: "item info updated" });
+                res.json("item updated");
             }
-
-        }
-    })
+        });
 
 });
 
@@ -122,7 +127,7 @@ usersintheDB = router.get('/all-user-data', (req, res, next) => {
 });
 
 //update user password in database
-router.put('/user-info/change-password/:userEmailId', (req, res, next) => {
+router.put('/user-info/change-password/:userEmailId',jwtHelper.verifyJwtToken ,(req, res, next) => {
     userInfo.findOneAndUpdate(
         { "userEmailId": req.params.userEmailId },
         {
@@ -143,7 +148,7 @@ router.put('/user-info/change-password/:userEmailId', (req, res, next) => {
 });
 
 // delete a user account
-router.delete('/user-info/delete-account/:userEmailId', (req, res, next) => {
+router.delete('/user-info/delete-account/:userEmailId', jwtHelper.verifyJwtToken,(req, res, next) => {
     userInfo.findOneAndDelete(
         { "userEmailId": req.params.userEmailId }
         , function (err, users) {
@@ -173,16 +178,131 @@ router.post('/authenticate', (req, res, next) => {
 
 // displaying the logged in user info i dont knwo whats being done here. 
 
-router.get('/user-profile', jwtHelper.verifyJwtToken, (req, res, next) =>{
+router.get('/user-profile', jwtHelper.verifyJwtToken, (req, res, next) => {
     userInfo.findOne({ _id: req._id },
         (err, user) => {
             if (!user)
                 return res.status(404).json({ status: false, message: 'User record not found.' });
             else
-                return res.status(200).json({ status: true, user : _.pick(user,['userName','email']) });
+                return res.status(200).json({ status: true, user: _.pick(user, ['userName', 'email', 'password' ,'userPhoneNumber']) });
         }
     );
 });
+
+
+
+
+
+
+
+
+// retrieving data from cart
+router.get('/user/cart/foodincart', jwtHelper.verifyJwtToken, (req, res, next) => {
+    foodInCart.find(function (err, items) {
+        if (err) {
+            res.json(err);
+        }
+        else {
+            res.json(items);
+        }
+    })
+});
+
+// posting data to cart. we have to pass the verification jwt token as well
+router.post('/user/cart/addtocart', jwtHelper.verifyJwtToken, (req, res, next) => {
+    let foodincart = new foodInCart();
+
+    nameOfFoodRequested = foodItem.find({ "itemName": req.body.foodName }
+        , function (err, existingItem) {
+
+            if (existingItem.length > 0) {
+                //console.log(existingItem); checks if its not returning an empty object array
+                foodincart.foodName = req.body.foodName;
+                foodincart.Quantity = req.body.Quantity;
+                foodincart.totalCost = req.body.totalCost;
+                foodincart.BoughtorNot = req.body.BoughtorNot;
+
+                foodincart.save((err, newitem) => {
+                    if (!err)
+                        res.send(newitem);
+                    else {
+                        if (err.code == 11000) {        
+                            updateQuantity(res, foodincart.foodName, foodincart.Quantity);
+                        }
+                        else
+                            return next(err);
+                    }
+                });
+            }
+            else {
+                return res.json({ message: "Item doesnot exist" });
+            }
+        });
+});
+
+//updating quantity if item exists in cart
+function updateQuantity(res, foodname, quantity) {
+
+    foodInCart.findOneAndUpdate(
+        { "foodName": foodname },
+        {
+            $set: {
+                Quantity: quantity
+            }
+        }
+        , function (err, response) {
+            if (err) {
+                console.log("err")
+                return res.json(err);
+            }
+            else {
+                return res.json({message: "Updated quantity to "+ quantity});
+            }
+        });
+}
+
+
+
+
+//update data in cart
+router.put('/user/cart/update/:foodName/:Quantity', (req, res, next) => {
+    foodInCart.findOneAndUpdate(
+        { "foodName": req.params.foodName },
+        {
+            $set: {
+                Quantity: req.params.Quantity
+            }
+        }
+        , function (err, users) {
+            if (err) {
+                res.json(err);
+            }
+            else {
+                res.json(users);
+            }
+        });
+});
+
+//On BUYING the ITEMS finally
+router.put('/user/cart/update/boughtornot', (req, res, next) => {
+    foodInCart.updateMany(
+        {},
+        {
+            $set: {
+                BoughtorNot: true
+            }
+        }
+        , function (err, users) {
+            if (err) {
+                res.json(err);
+            }
+            else {
+                res.json(users);
+            }
+        });
+});
+
+
 
 //Exporting router module.
 

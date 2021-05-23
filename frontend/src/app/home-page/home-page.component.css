@@ -1,3 +1,6 @@
+.body{
+    min-height: 100% !important;
+}
 .mat-toolbar-navigation {
     background: #f9fafbe0;
 }

@@ -1,40 +1,49 @@
 /* You can add global styles to this file, and also import other style files */
+
 @import "~bootstrap/dist/css/bootstrap.css";
-
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
-
-
-
-.mat-form-field-label{
-    color:rgb(49, 49, 49) !important;
-  }
-  .mat-form-field-underline{
-    background-color:rgb(49, 49, 49) !important;
-  }
-  .mat-input-element{
-    caret-color: rgb(49, 49, 49) !important;
-}
-.mat-focused{
-    color: rgb(49, 49, 49) !important;
-}
-.mat-form-field-ripple{
-    background-color: rgb(49, 49, 49) !important;
-}
-.mat-checkbox-checked.mat-primary .mat-checkbox-background{
-    background-color: rgb(49, 49, 49) !important;
+html, body {
+  height: 100%;
 }
 
-.mat-snack-bar-container{
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.mat-form-field-label {
+  color: rgb(49, 49, 49) !important;
+}
+
+.mat-form-field-underline {
+  background-color: rgb(49, 49, 49) !important;
+}
+
+.mat-input-element {
+  caret-color: rgb(49, 49, 49) !important;
+}
+
+.mat-focused {
+  color: rgb(49, 49, 49) !important;
+}
+
+.mat-form-field-ripple {
+  background-color: rgb(49, 49, 49) !important;
+}
+
+.mat-checkbox-checked.mat-primary .mat-checkbox-background {
+  background-color: rgb(49, 49, 49) !important;
+}
+
+.mat-snack-bar-container {
   background-color: #f9fafbe0 !important;
   color: rgb(49, 49, 49) !important;
 }
 
-.mat-simple-snackbar-action button{
+.mat-simple-snackbar-action button {
   color: rgb(49, 49, 49) !important;
 }
 
-.mat-menu-panel{
+.mat-menu-panel {
   border-radius: 10px !important;
   width: 113px;
 }
@@ -46,4 +55,15 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .mat-progress-spinner circle, .mat-spinner circle {
   stroke: #DC143C;
-  }
+}
+
+.mat-tab-group.mat-primary .mat-ink-bar, .mat-tab-nav-bar.mat-primary .mat-ink-bar {
+  background-color: #DC143C;
+}
+
+.mat-tab-body-content {
+  overflow: unset !important;
+}
+mat-divider{
+  background: crimson;
+}

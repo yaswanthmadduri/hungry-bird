@@ -28,7 +28,8 @@ import { MatDialogModule } from '@angular/material/dialog'
 import { MatSnackBarModule } from '@angular/material/snack-bar'
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatMenuModule } from '@angular/material/menu';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatTabsModule } from '@angular/material/tabs'
  
 
 
@@ -81,13 +82,14 @@ import { UserProfileComponent } from './home-page/user-profile/user-profile.comp
     MatProgressBarModule,
     MatMenuModule,
     MatProgressSpinnerModule,
+    MatTabsModule,
     HttpClientModule
   ],
   providers: [AuthGuard, AuthInterceptor, {
     provide: HTTP_INTERCEPTORS,
     useClass: AuthInterceptor,
     multi: true
-  }
+  }, HomePageComponent,
   ],
   bootstrap: [AppComponent]
 })

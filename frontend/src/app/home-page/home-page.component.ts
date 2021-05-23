@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { UserLoginService } from '../user-login/user-login.service';
 import { Router } from '@angular/router';
+import { HomePageService } from './home-page.service'
+import { UserCartComponent } from './user-cart/user-cart.component';
 
 @Component({
   selector: 'app-home-page',
@@ -10,13 +12,16 @@ import { Router } from '@angular/router';
 export class HomePageComponent implements OnInit {
 
   userDetails: any;
+  userProfile: any;
+  usercart: any;
   showUserProfile: boolean = false;
   showCart: boolean = false;
 
-  constructor(private userLoginService: UserLoginService, private router: Router) { }
+  constructor(private userLoginService: UserLoginService, private router: Router, private homePageService : HomePageService) { }
+
 
   ngOnInit(): void {
-    this.userLoginService.getUserProfile().subscribe(
+    this.homePageService.getUserProfile().subscribe(
       (res: any) => {
         this.userDetails = res['user'];
       },
@@ -24,6 +29,7 @@ export class HomePageComponent implements OnInit {
         console.log(err);
       }
     );
+
   }
 
   onLogout() {
@@ -31,28 +37,60 @@ export class HomePageComponent implements OnInit {
     this.router.navigateByUrl('/signup');
   }
 
-  onClickingProfile() {
+  getProfile() {
     if (this.userLoginService.isLoggedIn()) {
 
       this.showCart = false;
-      this.showUserProfile = true;
+
+      this.homePageService.getUserProfile().subscribe(
+        (response : any)=>{
+
+          this.showUserProfile = true;
+          console.log(response);
+          this.userProfile = response.user;
+        },
+        (error)=>{
+          console.log("Some error occured", error.error.message);
+        }
+      )
     }
     else {
       this.showUserProfile = false;
+      this.router.navigateByUrl('/signup');
     }
+/*     if (this.userLoginService.isLoggedIn()) {
+      this.router.navigateByUrl('/home-page/user-profile');
+    }
+    else{
+      this.router.navigateByUrl('/signup');
+    } */
+
   }
 
-  onClickingCart() {
-    if (this.userLoginService.isLoggedIn()) {
+  getCartItems(){
 
+   /*  if (this.userLoginService.isLoggedIn()) {
+      this.router.navigateByUrl('/home-page/cart');
+    }
+    else{
+      this.router.navigateByUrl('/signup');
+    } */
+    if (this.userLoginService.isLoggedIn()) {
       this.showUserProfile = false;
-      this.showCart = true;
+      this.homePageService.getCartItemsService().subscribe(
+        (response : any)=>{
+          this.showCart = true;
+          console.log(response);
+          this.usercart = response;
+        },
+        (error)=>{
+          console.log("Some error occured", error.error.message);
+        }
+      )
     }
     else {
       this.showCart = false;
+      this.router.navigateByUrl('/signup');
     }
   }
-
-
-
 }

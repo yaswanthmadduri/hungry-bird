@@ -6,7 +6,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class UserLoginService {
 
-  baseURL: string = "http://localhost:3000/api";
+  baseURL: string = "/api";
   noAuthHeader = {headers: new HttpHeaders({'NoAuth' : 'True'})};
 
 
@@ -18,11 +18,6 @@ export class UserLoginService {
   signinTheUser(authCredentials: any){
     return this.httpClientRequest.post<any>(this.baseURL + '/authenticate', authCredentials, this.noAuthHeader);
   }
-
-  getUserProfile() {
-    return this.httpClientRequest.get(this.baseURL + '/user-profile');
-  }
-
 
   // HTTP HELPER METHODS
  setToken(token: string) {

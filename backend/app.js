@@ -16,12 +16,13 @@ const passport = require('passport');
 const route = require('./routes/routes');
 
 //connecting to mongodb
-mongoose.connect('mongodb://localhost:27017/hungrybird',{ useUnifiedTopology: true, useNewUrlParser: true });
+const connectionString = "mongodb+srv://yaswanth:tknIDZPoWYFgz3Xr@hungrybirdcluster.fokxh.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+mongoose.connect(connectionString,{ useUnifiedTopology: true, useNewUrlParser: true });
 mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
 //on connection to mongodb
 mongoose.connection.on('connected', ()=>{
-    console.log("Mongodb connected on port 27017");
+    console.log("Connected to Mongo DataBase Compass");
 });
 
 //on error in connecting to mongodb
