@@ -2,28 +2,29 @@ const mongoose = require('mongoose');
 
 const foodItemsInRestaurantSchema = mongoose.Schema({
 
-    itemName:{
-        type:String,
+    itemName: {
+        type: String,
         required: true,
-        unique : true
+        unique: true
     },
-    itemType:{
-        type:String,
+    itemType: {
+        type: String,
         required: true
     },
-    itemCost:{
+    itemCost: {
         type: Number,
         required: true
     },
-    itemQuantityAvailable:{
-        type:Number,
-        required: true
-    },
-    itemQuantityBought:{
+    itemQuantityAvailable: {
         type: Number,
         required: true
-    }
+    },
+    itemQuantityBought: {
+        type: Number,
+        required: true
+    },
+    productImage: { type: String, required: true }
 }
-,{ collection: 'fooditemsinrestaurant'});
+    , { collection: 'fooditemsinrestaurant' });
 
-const foodItem = module.exports = mongoose.model('foodItem',foodItemsInRestaurantSchema);
+const foodItem = module.exports = mongoose.model('foodItem', foodItemsInRestaurantSchema);

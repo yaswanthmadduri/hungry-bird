@@ -1,33 +1,115 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 <body>
     <!-- nav bar implementation -->
     <div class="nav-bar">
         <mat-toolbar class="mat-toolbar-navigation">
-            <span style="margin-left: 10px; cursor: pointer" routerLink="/login" routerLinkActive="active">
-                <mat-icon aria-hidden="false" aria-label="Hungry Bird" style="top: 5px;
-                    position: relative;">tapas</mat-icon>
-                <span class="hide-for-mobile-devices">&nbsp; Hungry Bird</span>
+            <span style="margin-left: 10px; cursor: pointer;" matTooltip="Food made awesome 🤤🤤🤤">
+                <img class="HBImage" aria-label="Hungry Bird" src="../../assets/Examples/homeicon.svg" alt="HB">
+                <span class="hide-for-mobile-devices HBFont">&nbsp; Hungry Bird</span>
             </span>
             <span class="nav-bar-spacer"></span>
             <span id="nameandiconSpan" [matMenuTriggerFor]="menu">
-                <span id="userFirstName" *ngIf="userDetails">Hi, {{userDetails.userName.split(' ')[0]}}!&nbsp;&nbsp;</span>
+                <span id="userFirstName" *ngIf="userDetails">Hi, {{userDetails.userName.split('
+                    ')[0]}}!&nbsp;&nbsp;</span>
                 <span id="userIcon">
-                    <mat-icon aria-hidden="false" aria-label="Example user face"
-                        style="position: relative; top: 5px;">account_circle</mat-icon>
+                    <mat-icon aria-hidden="false" aria-label="Example user face" style="position: relative; top: 5px;">
+                        account_circle</mat-icon>
                 </span>
                 <mat-menu #menu="matMenu">
-                    <button mat-menu-item (click) = "getProfile()">My profile</button>
-                    <button mat-menu-item (click) = "getCartItems()">My cart</button>
+                    <button mat-menu-item (click)="getProfile()">My profile</button>
+                    <button mat-menu-item (click)="getCartItems()">My cart</button>
                     <button mat-menu-item>Favourites</button>
                     <button mat-menu-item (click)="onLogout()">Logout</button>
-                  </mat-menu>
+                </mat-menu>
             </span>
         </mat-toolbar>
     </div>
+    <div class="homepagediv" *ngIf="!showUserProfile && !showCart && showHomePage">
+        <div class="carouselForHomePage">
+            <div id="carouselExampleInterval" class="carousel carousel-dark slide" data-bs-ride="carousel">
+                <div class="carousel-inner" style="height:570px;">
+                    <div class="carousel-item active" data-bs-interval="3000">
+                        <img src="../../assets/backgrounds/Carousel/amirali-mirhashemian-ZSukCSw5VV4-unsplash.jpg"
+                            style="object-fit: cover; height: 600px; width: auto;" class="d-block w-100" alt="...">
+                    </div>
+                    <div class="carousel-item" data-bs-interval="3000">
+                        <img src="../../assets/backgrounds/Carousel/atikah-akhtar-DIdQP3HUMXQ-unsplash.jpg"
+                            style="object-fit: cover; height: 600px; width: auto;" class="d-block w-100" alt="...">
+                    </div>
+                    <div class="carousel-item" data-bs-interval="3000">
+                        <img src="../../assets/backgrounds/Carousel/charles-deluvio-PqsImnjuElM-unsplash.jpg"
+                            style="object-fit: cover; height: 600px; width: auto;" class="d-block w-100" alt="...">
+                    </div>
+                    <div class="carousel-item" data-bs-interval="3000">
+                        <img src="../../assets/backgrounds/Carousel/gabrielle-henderson-djY0xDWCEUM-unsplash.jpg"
+                            style="object-fit: cover; height: 600px; width: auto;" class="d-block w-100" alt="...">
+                    </div>
+                    <div class="carousel-item" data-bs-interval="3000">
+                        <img src="../../assets/backgrounds/Carousel/taylor-kiser-POFG828-GQc-unsplash.jpg"
+                            style="object-fit: cover; height: 600px; width: auto;" class="d-block w-100" alt="...">
+                    </div>
+                    <div class="carousel-item" data-bs-interval="3000">
+                        <img src="../../assets/backgrounds/Carousel/viktor-forgacs-WmKXu-bzygo-unsplash.jpg"
+                            style="object-fit: cover; height: 600px; width: auto;" class="d-block w-100" alt="...">
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval"
+                    data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval"
+                    data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        </div>
 
-    <div class="user-profile"  *ngIf="showUserProfile && !showCart">
+        <div class="spacingdiv">
+            <h1 style="text-align: center;">  👇👇 Delicious items on the way 🤤🤤</h1>
+        </div>
+        <!-- This is for displaying items in restaurant -->
+        <div class="container ">
+            <div class="row overflow-hidden">
+                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-xs-3" *ngFor="let item of restaurantItems">
+                    <div>
+                        <mat-card class="item-card">
+                            <mat-card-header>
+                                <mat-card-title >{{item.itemName}}</mat-card-title>
+                            </mat-card-header>
+                            <img mat-card-image [src]='item.productImage' style="height: 250px; object-fit: cover;" alt="Product photo">
+                            <mat-card-content>
+                                <div class="typeoffood">
+                                    <mat-chip-list aria-label="Category selection" style="display: inline-block;">
+                                        <mat-chip style="border: 1px solid;">{{item.itemType}}</mat-chip>
+                                        <div class="spacer" style="margin-left: 80px;"></div>
+                                        <mat-chip style="border: 1px solid;">{{item.itemCost | currency:"INR":"symbol"}}</mat-chip>
+                                      </mat-chip-list>
+                                </div>
+                              </mat-card-content>
+                            <mat-card-actions>
+                                <button mat-button (click)="addthisitemtocart($event)">Add to cart <mat-icon>shopping_cart</mat-icon></button>
+                                <div style="float: right;">
+                                    <button mat-button mat-icon-button color="warn"> <mat-icon>favorite</mat-icon> </button>
+                                </div>
+                            </mat-card-actions>
+                        </mat-card>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+    <div class="user-profile" *ngIf="showUserProfile && !showCart && !showHomePage">
         <app-user-profile></app-user-profile>
     </div>
-    <div class="user-cart"  *ngIf="showCart && !showUserProfile">
+    <div class="user-cart" *ngIf="showCart && !showUserProfile && !showHomePage">
         <app-user-cart></app-user-cart>
     </div>
 </body>

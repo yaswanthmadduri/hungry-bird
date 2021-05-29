@@ -11,16 +11,79 @@ const passport = require('passport');
 const jwtHelper = require('../config/jwtHelper');
 
 const _ = require('lodash');
+const mongoose = require("mongoose");
+const multer = require('multer');
 
 
+const mongo = require('../mongo');
+const e = require('express');
+const pictureLink = "";
 
+/////////////////////////// restaurant food pics//////////////////////////
+
+
+const foodImagesStorage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, 'uploads/foodPicsforRestaurant');
+    },
+    filename: function (req, file, cb) {
+        let randomSequence = Math.random().toString(36).substring(8);
+        cb(null, file.fieldname + randomSequence + file.originalname);
+    }
+});
+const foodImageUploadFileFilter = (req, file, cb) => {
+    if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
+        cb(null, true);
+        console.log("Uploaded");
+    } else {
+        cb(null, false);
+    }
+};
+const uploadFoodImages = multer({
+    storage: foodImagesStorage,
+    limits: {
+        fileSize: 1024 * 1024 * 3
+    },
+    fileFilter: foodImageUploadFileFilter
+});
+
+
+//////////////USER PROFILE PIC/////////////
+
+const userProfilePicStorage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, 'uploads/userProfilePics');
+    },
+    filename: function (req, file, cb) {
+        let randomSequence = Math.random().toString(36).substring(8);
+        cb(null, file.fieldname + randomSequence + file.originalname);
+    }
+});
+
+const userProfilePicTypeFilter = (req, file, cb) => {
+    if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
+        cb(null, true);
+        console.log("Pic uploaded");
+    } else {
+        cb(null, false);
+    }
+};
+
+
+const uploadProfilePic = multer({
+    storage: userProfilePicStorage,
+    limits: {
+        fileSize: 1024 * 1024 * 3
+    },
+    fileFilter: userProfilePicTypeFilter
+});
 
 ////////////////// RESTAURANT DATA/////////////////////////
 
 
 
 // retrieving food available at the restaurant from database
-router.get('/restaurant/available-food-items',(req, res, next) => {
+router.get('/restaurant/available-food-items', (req, res, next) => {
     foodItem.find(function (err, items) {
         if (err) {
             res.json(err);
@@ -32,15 +95,15 @@ router.get('/restaurant/available-food-items',(req, res, next) => {
 });
 
 // posting new food in the restaurant to database
-router.post('/restaurant/add-item-to-list',jwtHelper.verifyJwtToken, (req, res, next) => {
+router.post('/restaurant/add-item-to-list', jwtHelper.verifyJwtToken, uploadFoodImages.single('productImage'), (req, res, next) => {
     let newFoodItem = new foodItem();
     newFoodItem.itemName = req.body.itemName,
         newFoodItem.itemQuantityAvailable = req.body.itemQuantityAvailable,
         newFoodItem.itemQuantityBought = req.body.itemQuantityBought,
         newFoodItem.itemCost = req.body.itemCost,
-        newFoodItem.itemType = req.body.itemType
+        newFoodItem.itemType = req.body.itemType,
+        newFoodItem.productImage = "http://localhost:3000/"+req.file.path
 
-        
     newFoodItem.save((err, newitem) => {
         if (!err)
             res.send(newitem + "Item has been added to the available list");
@@ -100,17 +163,20 @@ router.post('/user-signup', (req, res, next) => {
         newuserInfo.userPhoneNumber = req.body.userPhoneNumber,
         newuserInfo.termsAccepted = req.body.termsAccepted,
         newuserInfo.signedUp = true,
+        newuserInfo.profilePicture = "",
+        newuserInfo.cartItems = [];
 
-        newuserInfo.save((err, newuser) => {
-            if (!err)
-                res.send(newuser);
-            else {
-                if (err.code == 11000)
-                    res.status(422).send(['Email address already exists.']);
-                else
-                    return next(err);
-            }
-        });
+    newuserInfo.save((err, newuser) => {
+        if (!err)
+            res.send(newuser);
+
+        else {
+            if (err.code == 11000)
+                res.status(422).send(['Email address already exists.']);
+            else
+                return next(err);
+        }
+    });
 });
 //Getting all the user info from the db.
 
@@ -126,13 +192,13 @@ usersintheDB = router.get('/all-user-data', (req, res, next) => {
     })
 });
 
-//update user password in database
-router.put('/user-info/change-password/:userEmailId',jwtHelper.verifyJwtToken ,(req, res, next) => {
+//update profile picture in database
+router.put('/user-info/update-profile-picture/:userEmailId', jwtHelper.verifyJwtToken, uploadProfilePic.single('profilePicture'), (req, res, next) => {
     userInfo.findOneAndUpdate(
-        { "userEmailId": req.params.userEmailId },
+        { "email": req.params.userEmailId },
         {
             $set: {
-                userPassword: req.body.userPassword,
+                profilePicture: req.file.path
             }
         }
         , function (err, users) {
@@ -140,17 +206,45 @@ router.put('/user-info/change-password/:userEmailId',jwtHelper.verifyJwtToken ,(
                 res.json(err);
             }
             else {
-                res.json(users);
+                res.json({message:"Success!"});
             }
         });
 
 
 });
 
+//get that updated profile picture
+router.get('/user-info/get-profile-pic/:userEmailId', jwtHelper.verifyJwtToken, (req,res,next) => {
+    userInfo.findOne({"email" : req.params.userEmailId},
+    function (err,data){
+        if(err){
+            res.json(err)
+        }
+        else{
+            res.json({"PictureLink" : data.profilePicture})
+        }
+    });
+})
+
+
+//get the cart items
+router.get('/user-info/get-cart/:userEmailId', jwtHelper.verifyJwtToken, (req,res,next) => {
+    userInfo.findOne({"email" : req.params.userEmailId},
+    function (err,data){
+        if(err){
+            res.json(err)
+        }
+        else{
+            res.json({"cartItems" : data.cartItems})
+        }
+    });
+})
+
+
 // delete a user account
-router.delete('/user-info/delete-account/:userEmailId', jwtHelper.verifyJwtToken,(req, res, next) => {
+router.delete('/user-info/delete-account/:userEmailId', jwtHelper.verifyJwtToken, (req, res, next) => {
     userInfo.findOneAndDelete(
-        { "userEmailId": req.params.userEmailId }
+        { "email": req.params.userEmailId }
         , function (err, users) {
             if (err) {
                 res.json(err);
@@ -184,7 +278,7 @@ router.get('/user-profile', jwtHelper.verifyJwtToken, (req, res, next) => {
             if (!user)
                 return res.status(404).json({ status: false, message: 'User record not found.' });
             else
-                return res.status(200).json({ status: true, user: _.pick(user, ['userName', 'email', 'password' ,'userPhoneNumber']) });
+                return res.status(200).json({ status: true, user: _.pick(user, ['userName', 'email', 'password', 'userPhoneNumber']) });
         }
     );
 });
@@ -208,8 +302,8 @@ router.get('/user/cart/foodincart', jwtHelper.verifyJwtToken, (req, res, next) =
     })
 });
 
-// posting data to cart. we have to pass the verification jwt token as well
-router.post('/user/cart/addtocart', jwtHelper.verifyJwtToken, (req, res, next) => {
+/* // posting data to cart. we have to pass the verification jwt token as well
+router.post('/user/cart/addtocart/:email', jwtHelper.verifyJwtToken, (req, res, next) => {
     let foodincart = new foodInCart();
 
     nameOfFoodRequested = foodItem.find({ "itemName": req.body.foodName }
@@ -222,22 +316,34 @@ router.post('/user/cart/addtocart', jwtHelper.verifyJwtToken, (req, res, next) =
                 foodincart.totalCost = req.body.totalCost;
                 foodincart.BoughtorNot = req.body.BoughtorNot;
 
+
+
                 foodincart.save((err, newitem) => {
-                    if (!err)
+                    if (!err) {
+
                         res.send(newitem);
+
+                    }
+
                     else {
-                        if (err.code == 11000) {        
-                            updateQuantity(res, foodincart.foodName, foodincart.Quantity);
+                        if (err.code == 11000) {
+                            a = updateQuantity(res, foodincart.foodName, foodincart.Quantity);
+                            console.log(a)
+
                         }
                         else
                             return next(err);
                     }
                 });
+
+
+
             }
             else {
                 return res.json({ message: "Item doesnot exist" });
             }
         });
+
 });
 
 //updating quantity if item exists in cart
@@ -256,42 +362,22 @@ function updateQuantity(res, foodname, quantity) {
                 return res.json(err);
             }
             else {
-                return res.json({message: "Updated quantity to "+ quantity});
+                return res.json({ message: "Updated quantity to " + quantity });
             }
         });
 }
-
-
-
-
-//update data in cart
-router.put('/user/cart/update/:foodName/:Quantity', (req, res, next) => {
-    foodInCart.findOneAndUpdate(
-        { "foodName": req.params.foodName },
-        {
-            $set: {
-                Quantity: req.params.Quantity
-            }
-        }
-        , function (err, users) {
-            if (err) {
-                res.json(err);
-            }
-            else {
-                res.json(users);
-            }
-        });
-});
+ */
 
 //On BUYING the ITEMS finally
 router.put('/user/cart/update/boughtornot', (req, res, next) => {
-    foodInCart.updateMany(
+    userInfo.updateMany(
         {},
         {
             $set: {
                 BoughtorNot: true
-            }
-        }
+            },
+        },
+        {timestamps: true}
         , function (err, users) {
             if (err) {
                 res.json(err);
@@ -303,6 +389,115 @@ router.put('/user/cart/update/boughtornot', (req, res, next) => {
 });
 
 
+
+
+//// cart implementation
+
+
+
+///// delete item from cart
+router.put('/user/:userEmailId/deletefromcart', jwtHelper.verifyJwtToken,(req, res, next) => {
+
+        userInfo.findOneAndUpdate({ email: req.params.userEmailId },
+            { $pull: { cartItems: { foodName: req.body.foodName } } },
+            function (err, data) {
+                if (err) res.send(err)
+                else res.send(data)
+            });
+
+});
+
+///// increase quantity by 1, provide item details in the body ex.  "foodName":"Chicken Biriyani"
+router.put('/user/:userEmailId/increasequantity',jwtHelper.verifyJwtToken, (req,res,next)=>{
+
+    if (req.body.Quantity != 0 && req.body.Quantity >0) {
+        
+        userInfo.findOneAndUpdate(
+            {
+                email: req.params.userEmailId,
+                "cartItems.foodName": req.body.foodName
+            },
+            {
+                $inc: {"cartItems.$.Quantity": 1}
+            },
+            {
+                "upsert": true
+            },
+            function (err, data) {
+                if (err) {
+                    res.send(err);
+                }
+                else {
+                    res.send(data);
+                }
+            })
+
+    }
+    else{
+        res.send("Quantity should be greater than 0")
+    }
+});
+
+
+
+///// decrease quantity by 1, provide item details in the body ex.  "foodName":"Chicken Biriyani"/////
+router.put('/user/:userEmailId/decreasequantity',jwtHelper.verifyJwtToken, (req,res,next)=>{
+
+    if (req.body.Quantity != 0 && req.body.Quantity >0) {
+        
+        userInfo.findOneAndUpdate(
+            {
+                email: req.params.userEmailId,
+                "cartItems.foodName": req.body.foodName
+            },
+            {
+                $inc: {"cartItems.$.Quantity": -1}
+            },
+            {
+                "upsert": true
+            },
+            function (err, data) {
+                if (err) {
+                    res.send(err);
+                }
+                else {
+                    res.send(data);
+                }
+            })
+
+    }
+    else{
+        res.send("Quantity should be greater than 0")
+    }
+});
+
+// posting data to cart. we have to pass the verification jwt token as well
+router.put('/user/:userEmailId/addtocart',jwtHelper.verifyJwtToken, (req, res, next) => {
+
+    userInfo.findOneAndUpdate(
+        { "email": req.params.userEmailId },
+        {
+            $push: {
+                cartItems: [
+                    {
+                        foodName: req.body.foodName,
+                        Quantity: req.body.Quantity,
+                    }
+                ]
+            }
+        },
+        { upsert: true }
+        , function (err, users) {
+            if (err) {
+                res.json(err);
+            }
+            else {
+                res.json(users + "users");
+            }
+
+        });
+
+})
 
 //Exporting router module.
 

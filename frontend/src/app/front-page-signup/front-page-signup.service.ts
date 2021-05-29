@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 export class FrontPageSignupService {
 
 
-  baseURL: string = "/api";
+  baseURL: string = "http://localhost:3000/api/";
   signupUser: string = "user-signup";
 
   constructor( private httpClientRequest: HttpClient ) { }

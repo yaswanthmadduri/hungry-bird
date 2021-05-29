@@ -32,6 +32,13 @@ h1 {
     cursor: pointer;
     position: relative;
     display: inline-block;
+    border-radius: 50%;
+    width: 300px;
+    height: 300px;
+}
+
+.maindivhere {
+    padding-top: 80px;
 }
 
 h1:hover, button:hover {
@@ -40,6 +47,10 @@ h1:hover, button:hover {
 
 img:hover {
     filter: blur(4px);
+}
+
+img {
+    box-shadow: 5px 1px 20px 6px #ccc;
 }
 
 .userprofilematcard {
@@ -52,39 +63,113 @@ img:hover {
     border: 0.5px solid darkgray;
 }
 
-.profilepic:hover .edit {
+.profilepicdiv:hover .edit {
     display: block;
+    left: 22%;
+    top: 53%;
 }
 
 .edit {
-    right: 42%;
-    top: 44%;
-    position: absolute;
+    color: black;
+    background: gray;    
+    border: 0.5px solid gray;
     display: none;
+    width: 35px;
+    border-radius: 50%;
+    height: 35px;
+    margin: auto;
 }
 
-.editbutton{
-    color: black;
-    background: gray;
-    border: 0.5px solid gray;
-    
+.editbuttondiv{
+    position: relative;
+    bottom: 165px;
 }
+
+.details {
+    text-align: center;
+}
+
+.profilepicdiv {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.displaydiv {
+    text-align: center;
+    margin: auto;
+    padding: 10px;
+    width: auto;
+    border-radius: 10px;
+    box-shadow: 8px 2px 20px 6px #ccc;
+    margin-top: 30px;
+    max-width: fit-content;
+}
+
+.displayrowdiv {
+    margin: 10px;
+}
+
+.detailsheadings {
+    text-align: initial;
+    white-space: nowrap;
+}
+
+.detailsfrombackend {
+    text-align: end;
+    white-space: nowrap;
+}
+
+
+input[type="file"] {
+    display: none;
+    cursor: pointer;
+}
+
+.progressbar{
+    margin: auto;
+    width: 300px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 .example-form {
     min-width: 150px;
     max-width: 500px;
     width: 100%;
-  }
-  
-  .example-full-width {
-    width: 100%;
-  }
-  
-  td {
-    padding-right: 8px;
-  }
+}
 
-  form{
-      margin:auto;
-  }
+.example-full-width {
+    width: 100%;
+}
+
+td {
+    padding-right: 8px;
+}
+
+form {
+    margin: auto;
+}

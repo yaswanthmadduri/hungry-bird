@@ -9,12 +9,44 @@
     flex: 1 1 auto;
 }
 
-@media (max-width: 425px) {
+@media (max-width: 500px) {
+    .hide-for-mobile-devices {
+        display: none;
+      }
+}
+
+@media (max-width: 375px){
     #userFirstName {
-      display: none;
-    }
+        display: none;
+      }
 }
 
 #nameandiconSpan{
     cursor: pointer;
+}
+
+
+.HBImage{
+    position: relative;
+    width: 60px;
+    margin-bottom: 5px;
+}
+
+.HBFont{
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+   font-weight: 300;
+   font-size: 22px;
+}
+.carousel-inner img {
+    width: 100%;
+  }
+
+.item-card{
+    margin:20px;
+    box-shadow: 7px 2px 20px 12px #ccc;
+    border-radius: 20px;
+}
+
+.spacingdiv{
+    margin : 75px;
 }

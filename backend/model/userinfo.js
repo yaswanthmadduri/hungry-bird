@@ -6,6 +6,17 @@ const jwt = require('jsonwebtoken');
 
 require('../config/passportconfig');
 
+const foodinCartSchema = mongoose.Schema({
+    foodName:{
+        type:String,
+        required: true
+    },
+    Quantity:{
+        type: Number,
+        required: true
+    },
+});
+
 const userSignupSchema = mongoose.Schema({
 
     email: {
@@ -42,8 +53,40 @@ const userSignupSchema = mongoose.Schema({
     },
     saltSecret: {
         type: String
-    }
-},{ collection: 'users'});
+    },
+    profilePicture: { type: String },
+    cartItems: [foodinCartSchema]
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 // Custom validation for email

@@ -9,10 +9,9 @@
     <!-- nav bar implementation -->
     <div class="nav-bar">
         <mat-toolbar class="mat-toolbar-navigation">
-            <span style="margin-left: 10px; cursor: pointer;">
-                <mat-icon aria-hidden="false" aria-label="Hungry Bird" style="top: 5px;
-                position: relative;">tapas</mat-icon>
-                <span class="hide-for-mobile-devices">&nbsp; Hungry Bird</span>
+            <span style="margin-left: 10px; cursor: pointer;" matTooltip="Food made awesome 🤤🤤🤤">
+                <img  class="HBImage" aria-label="Hungry Bird" src="../../assets/Examples/homeicon.svg" alt="HB">
+                <span class="hide-for-mobile-devices HBFont">&nbsp; Hungry Bird</span>
             </span>
             <span class="nav-bar-spacer"></span>
             <span>
@@ -23,8 +22,12 @@
                 <button mat-stroked-button class="hide-for-mobile-devices" matTooltip="About Us" type="submit"
                     style="border: none;" (click)="openDialogforAboutUs()">About</button>
             </span>
+
         </mat-toolbar>
     </div>
+
+
+    <!-- Page implementation starts -->
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-4 col-md-8 col-lg-8 ">
@@ -67,7 +70,7 @@
                                     <mat-form-field class="form-full-width">
                                         <mat-label>Phone number</mat-label>
                                         <span matPrefix>+91 &nbsp;</span>
-                                        <input matInput type="number" name="userPhoneNumber"
+                                        <input matInput type="tel" name="userPhoneNumber"
                                             formControlName="userPhoneNumber"
                                             placeholder="Enter your 10-digit phone number" #userPhoneNumber>
 
@@ -113,13 +116,13 @@
                                     <div class="form-group input-password">
                                         <mat-form-field class="form-full-width">
                                             <mat-label>Password</mat-label>
-                                            <input matInput [type]="hidePassword ? 'userPassword' : 'text'"
+                                            <input matInput type="password"
                                                 name="userPassword" formControlName="userPassword"
                                                 placeholder="Please enter a Password">
-                                            <!-- <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword">
+                                            <!-- <button mat-icon-button matSuffix (click)="hideThePassword()">
                                                 <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
-                                            </button>
- -->
+                                            </button> -->
+
                                             <!-- Validating the password -->
                                             <mat-error
                                                 *ngIf="userProfileForm.get('userPassword').invalid && (userProfileForm.get('userPassword').dirty || userProfileForm.get('userPassword').touched)">

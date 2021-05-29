@@ -29,8 +29,10 @@ import { MatSnackBarModule } from '@angular/material/snack-bar'
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatTabsModule } from '@angular/material/tabs'
- 
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatChipsModule } from '@angular/material/chips';
+  
 
 
 import { TermsAndconditionsComponent } from './front-page-signup/terms-andconditions/terms-andconditions.component';
@@ -44,6 +46,8 @@ import { AuthInterceptor } from './auth/auth.interceptor';
 import { NotfoundComponent } from './notfound/notfound.component';
 import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.component';
 import { UserProfileComponent } from './home-page/user-profile/user-profile.component';
+import { MatNativeDateModule } from '@angular/material/core';
+import { UserProfileUpdateComponent } from './home-page/user-profile/user-profile-update/user-profile-update.component';
 
 
 @NgModule({
@@ -59,6 +63,7 @@ import { UserProfileComponent } from './home-page/user-profile/user-profile.comp
     NotfoundComponent,
     LoadingSpinnerComponent,
     UserProfileComponent,
+    UserProfileUpdateComponent,
   ],
   imports: [
     BrowserModule,
@@ -83,6 +88,10 @@ import { UserProfileComponent } from './home-page/user-profile/user-profile.comp
     MatMenuModule,
     MatProgressSpinnerModule,
     MatTabsModule,
+    MatRadioModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatChipsModule,
     HttpClientModule
   ],
   providers: [AuthGuard, AuthInterceptor, {

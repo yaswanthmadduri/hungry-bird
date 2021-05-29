@@ -17,7 +17,7 @@ const foodinCartSchema = mongoose.Schema({
     totalCost:{
         type: Number
     }
-},{ collection: 'foodincart'});
+});
 
-foodincart = new user()
-const foodItem = module.exports = mongoose.model('foodincart',foodinCartSchema);
+
+module.exports = mongoose.model('foodincart',foodinCartSchema);

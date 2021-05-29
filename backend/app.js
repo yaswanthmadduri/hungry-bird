@@ -16,6 +16,7 @@ const passport = require('passport');
 const route = require('./routes/routes');
 
 //connecting to mongodb
+//const connectionString = "mongodb://localhost:27017/hungrybird"
 const connectionString = "mongodb+srv://yaswanth:tknIDZPoWYFgz3Xr@hungrybirdcluster.fokxh.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 mongoose.connect(connectionString,{ useUnifiedTopology: true, useNewUrlParser: true });
 mongoose.set('useFindAndModify', false);
@@ -56,6 +57,8 @@ app.use(express.urlencoded({
 
 app.use(passport.initialize());
 
+// making upload folder public (Making it usable by angular to display to frontent)
+app.use('/uploads', express.static('uploads'));
 
 
 //changing the route scope to routes.js

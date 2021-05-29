@@ -1,9 +1,34 @@
-.mat-spinner{
+.mat-spinner {
     margin: auto;
 }
-.mat-spinner-div{
+
+.spinner-div {
     position: fixed;
     width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+@keyframes loader-rotate {
+    0% {
+        transform: rotate(0);
+    }
+    100% {
+        transform: rotate( 360deg);
+    }
+}
+
+.loader {
+    width: 80px;
+    height: 80px;
+    border: 4px solid #fafafa8f;
+    border-top-color: #db4c3f;
+    border-radius: 50%;
+    position: relative;
+    animation: loader-rotate 1.5s linear infinite;
     top: 50%;
-    padding: 10px;
+    margin: -28px auto 0 auto;
 }

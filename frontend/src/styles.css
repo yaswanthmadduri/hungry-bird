@@ -1,6 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 
 @import "~bootstrap/dist/css/bootstrap.css";
+
 html, body {
   height: 100%;
 }
@@ -34,10 +35,7 @@ body {
   background-color: rgb(49, 49, 49) !important;
 }
 
-.mat-snack-bar-container {
-  background-color: #f9fafbe0 !important;
-  color: rgb(49, 49, 49) !important;
-}
+
 
 .mat-simple-snackbar-action button {
   color: rgb(49, 49, 49) !important;
@@ -66,4 +64,28 @@ body {
 }
 mat-divider{
   background: crimson;
+}
+
+.mat-progress-bar-fill::after {
+  background-color: #db4c3f;
+}
+
+.mat-progress-bar-buffer {
+  background: #fccdcd;
+}
+
+.mat-progress-bar {
+  border-radius: 2px;
+}
+
+
+.carousel-inner {
+  position: relative;
+  width: 100%;
+  height: 500px;
+  overflow: hidden;
+}
+
+.mat-card-header-text{
+  margin: auto !important;
 }

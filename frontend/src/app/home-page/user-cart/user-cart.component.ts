@@ -10,18 +10,29 @@ import { HomePageComponent } from '../home-page.component';
 })
 export class UserCartComponent implements OnInit {
 
-  constructor(private homepageComponent : HomePageComponent) { }
+  constructor(private homepageComponent : HomePageComponent, private router: Router, private userLoginService: UserLoginService, private userCartService : UserCartService) { }
 
   ngOnInit(): void {
-
-    this.justafunction();
+    this.getCart();
   }
 
+  cartitems : any;
   userCart : any = this.homepageComponent.usercart;
-
-  justafunction(){
-    for(let i = 0; i< this.userCart.length; i++){
-      console.log(i, this.userCart[i])
+  userprofile = this.homepageComponent.userProfile;
+  getCart() {
+    if (this.userLoginService.isLoggedIn()) {
+      this.userCartService.getcartService(this.homepageComponent.userDetails.email).subscribe(
+        (response: any) => {
+          this.cartitems = response;
+          console.log(this.cartitems);
+        },
+        (error) => {
+          console.log("Some error occured while getting your pic", error.error.message);
+        }
+      )
+    }
+    else {
+      this.router.navigateByUrl('/login');
     }
   }
 }
