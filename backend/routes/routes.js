@@ -32,7 +32,7 @@ const foodImagesStorage = multer.diskStorage({
     }
 });
 const foodImageUploadFileFilter = (req, file, cb) => {
-    if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
+    if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png' || file.mimetype === 'image/svg') {
         cb(null, true);
         console.log("Uploaded");
     } else {
@@ -61,7 +61,7 @@ const userProfilePicStorage = multer.diskStorage({
 });
 
 const userProfilePicTypeFilter = (req, file, cb) => {
-    if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
+    if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png' || file.mimetype === 'image/svg') {
         cb(null, true);
         console.log("Pic uploaded");
     } else {
@@ -163,7 +163,7 @@ router.post('/user-signup', (req, res, next) => {
         newuserInfo.userPhoneNumber = req.body.userPhoneNumber,
         newuserInfo.termsAccepted = req.body.termsAccepted,
         newuserInfo.signedUp = true,
-        newuserInfo.profilePicture = "",
+        newuserInfo.profilePicture = "uploads/dummyprofilepic/avatar_male.svg";
         newuserInfo.cartItems = [];
 
     newuserInfo.save((err, newuser) => {
@@ -235,7 +235,7 @@ router.get('/user-info/get-cart/:userEmailId', jwtHelper.verifyJwtToken, (req,re
             res.json(err)
         }
         else{
-            res.json({"cartItems" : data.cartItems})
+            res.json(data.cartItems)
         }
     });
 })
@@ -399,7 +399,7 @@ router.put('/user/cart/update/boughtornot', (req, res, next) => {
 router.put('/user/:userEmailId/deletefromcart', jwtHelper.verifyJwtToken,(req, res, next) => {
 
         userInfo.findOneAndUpdate({ email: req.params.userEmailId },
-            { $pull: { cartItems: { foodName: req.body.foodName } } },
+            { $pull: { cartItems: { itemName: req.body.itemName } } },
             function (err, data) {
                 if (err) res.send(err)
                 else res.send(data)
@@ -410,15 +410,15 @@ router.put('/user/:userEmailId/deletefromcart', jwtHelper.verifyJwtToken,(req, r
 ///// increase quantity by 1, provide item details in the body ex.  "foodName":"Chicken Biriyani"
 router.put('/user/:userEmailId/increasequantity',jwtHelper.verifyJwtToken, (req,res,next)=>{
 
-    if (req.body.Quantity != 0 && req.body.Quantity >0) {
+    if (req.body.itemQuantity != 0 && req.body.itemQuantity >0) {
         
         userInfo.findOneAndUpdate(
             {
                 email: req.params.userEmailId,
-                "cartItems.foodName": req.body.foodName
+                "cartItems.itemName": req.body.itemName
             },
             {
-                $inc: {"cartItems.$.Quantity": 1}
+                $inc: {"cartItems.$.itemQuantity": 1}
             },
             {
                 "upsert": true
@@ -443,15 +443,15 @@ router.put('/user/:userEmailId/increasequantity',jwtHelper.verifyJwtToken, (req,
 ///// decrease quantity by 1, provide item details in the body ex.  "foodName":"Chicken Biriyani"/////
 router.put('/user/:userEmailId/decreasequantity',jwtHelper.verifyJwtToken, (req,res,next)=>{
 
-    if (req.body.Quantity != 0 && req.body.Quantity >0) {
+    if (req.body.itemQuantity != 0 && req.body.itemQuantity >0) {
         
         userInfo.findOneAndUpdate(
             {
                 email: req.params.userEmailId,
-                "cartItems.foodName": req.body.foodName
+                "cartItems.itemName": req.body.itemName
             },
             {
-                $inc: {"cartItems.$.Quantity": -1}
+                $inc: {"cartItems.$.itemQuantity": -1}
             },
             {
                 "upsert": true
@@ -480,24 +480,35 @@ router.put('/user/:userEmailId/addtocart',jwtHelper.verifyJwtToken, (req, res, n
             $push: {
                 cartItems: [
                     {
-                        foodName: req.body.foodName,
-                        Quantity: req.body.Quantity,
+                        itemName: req.body.itemName,
+                        itemQuantity: req.body.itemQuantity,
+                        itemCost: req.body.itemCost,
+                        itemType: req.body.itemType,
+                        productImage: req.body.productImage,
+                        _id: req.body._id
                     }
                 ]
             }
         },
         { upsert: true }
-        , function (err, users) {
-            if (err) {
-                res.json(err);
-            }
-            else {
-                res.json(users + "users");
-            }
+        , function (err, data) {
+                if (!err) {
 
-        });
+                    res.send(data);
 
-})
+                }
+
+                else {
+                    if (err.code == 11000) {
+                       console.log("doop")
+
+                    }
+                    else
+                        return next(err);
+                }
+            })
+
+});
 
 //Exporting router module.
 

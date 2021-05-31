@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { UserLoginService } from '../user-login/user-login.service';
 import { Router } from '@angular/router';
 import { HomePageService } from './home-page.service'
@@ -21,7 +21,7 @@ export class HomePageComponent implements OnInit {
   profilepicInfo: any;
   restaurantItems: any;
   showHomePage: boolean = true;
-  itemdetails: any;
+  itemdetails: String= "";
   addtocartitem: any;
 
   constructor(private formBuilder: FormBuilder, private userLoginService: UserLoginService, private router: Router, private homePageService: HomePageService, private _snackBar: MatSnackBar) { }
@@ -50,7 +50,7 @@ export class HomePageComponent implements OnInit {
     if (this.userLoginService.isLoggedIn()) {
       this.homePageService.getItemsInRestaurantService().subscribe(
         (response: any) => {
-          this.restaurantItems = response;
+          this.restaurantItems = response; ////contains data from restaurant
           console.log(this.restaurantItems);
         },
         (error) => {
@@ -109,19 +109,14 @@ export class HomePageComponent implements OnInit {
   }
 
 
-  addthisitemtocart(event: any) {
-    console.log(event);
-    this.itemdetails = {
-      "foodName": "Edo okati",
-      "Quantity": 2
-    };
-    console.log(this.addtocartitem);
+  addthisitemtocart(item : any) {
+    console.log(item);
+    this.itemdetails = item;
     if (this.userLoginService.isLoggedIn()) {
 
       this.homePageService.additemtocartService(this.itemdetails, this.userDetails.email).subscribe(
         (response) => {
           this._snackBar.open('Added successfully 😊', 'Okay', { duration: 5000 });
-          this.router.navigateByUrl('/login');
         },
         (error) => {
           console.log("Some error occured", error);

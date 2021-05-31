@@ -1,1 +1,39 @@
-{{cartitems}}
+<body>
+    <div class="spacingdiv">
+        <h1 style="text-align: center;">Your Cart</h1>
+    </div>
+    <!-- This is for displaying items in restaurant -->
+    <div class="container ">
+        <div class="row overflow-hidden">
+            <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-xs-3" *ngFor="let item of cartItems">
+                <div>
+                    <mat-card class="item-card">
+                        <mat-card-header>
+                            <mat-card-title >{{item.itemName}}</mat-card-title>
+                        </mat-card-header>
+                        <img mat-card-image [src]='item.productImage' style="height: 250px; object-fit: cover;" alt="Product photo">
+                        <mat-card-content>
+                            <div class="typeoffood">
+                                <mat-chip-list aria-label="Category selection" style="display: inline-block;">
+                                    <mat-chip style="border: 1px solid;">{{item.itemType}}</mat-chip>
+                                    <mat-chip style="border: 1px solid;">{{item.itemCost | currency:"INR":"symbol"}}</mat-chip>
+                                  </mat-chip-list>
+                            </div>
+                          </mat-card-content>
+                        <mat-card-actions>
+                            <button mat-button>Add to cart <mat-icon>shopping_cart</mat-icon></button>
+                            <div style="float: right;">
+                                <button mat-button mat-icon-button color="warn"> <mat-icon>favorite</mat-icon> </button>
+                            </div>
+                        </mat-card-actions>
+                    </mat-card>
+
+                </div>
+            </div>
+        </div>
+        <div class="spacingdiv">
+            <h1 style="text-align: center;">...</h1>
+        </div>
+    </div>
+    
+</body>>

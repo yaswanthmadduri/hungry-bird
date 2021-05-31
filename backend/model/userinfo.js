@@ -7,14 +7,31 @@ const jwt = require('jsonwebtoken');
 require('../config/passportconfig');
 
 const foodinCartSchema = mongoose.Schema({
-    foodName:{
+    itemName:{
         type:String,
         required: true
     },
-    Quantity:{
+    itemQuantity:{
         type: Number,
         required: true
     },
+    itemCost:{
+        type: Number,
+        required : true
+    },
+    itemType:{
+        type: String,
+        required: true
+
+    },
+    productImage:{
+        type: String,
+        required: true
+    },
+    _id:{
+        type: String,
+        required: true
+    }
 });
 
 const userSignupSchema = mongoose.Schema({

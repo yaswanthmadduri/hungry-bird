@@ -16,15 +16,15 @@ export class UserCartComponent implements OnInit {
     this.getCart();
   }
 
-  cartitems : any;
+  cartItems : any;
   userCart : any = this.homepageComponent.usercart;
   userprofile = this.homepageComponent.userProfile;
   getCart() {
     if (this.userLoginService.isLoggedIn()) {
       this.userCartService.getcartService(this.homepageComponent.userDetails.email).subscribe(
         (response: any) => {
-          this.cartitems = response;
-          console.log(this.cartitems);
+          this.cartItems = response;
+          console.log(this.cartItems);
         },
         (error) => {
           console.log("Some error occured while getting your pic", error.error.message);

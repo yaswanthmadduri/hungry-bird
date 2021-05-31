@@ -30,7 +30,9 @@ export class HomePageService {
   }
 
   additemtocartService(itemdetails: any, userEmailId : String){
-    return this.httpClientRequest.post<any>("http://localhost:3000/api/user/mny@gmail.com/addtocart", itemdetails, {'headers': { 'content-type': 'application/json'}  });
+    console.log(JSON.stringify(itemdetails)+"in service")
+    
+    return this.httpClientRequest.put<any>("http://localhost:3000/api/user/"+userEmailId+"/addtocart", JSON.stringify(itemdetails), {'headers': { 'content-type': 'application/json'}  });
   }
 
 
