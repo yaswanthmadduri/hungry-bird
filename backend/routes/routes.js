@@ -396,7 +396,7 @@ router.put('/user/cart/update/boughtornot', (req, res, next) => {
 
 
 ///// delete item from cart
-router.put('/user/:userEmailId/deletefromcart', jwtHelper.verifyJwtToken,(req, res, next) => {
+router.put('/user/deletefromcart/:userEmailId', jwtHelper.verifyJwtToken,(req, res, next) => {
 
         userInfo.findOneAndUpdate({ email: req.params.userEmailId },
             { $pull: { cartItems: { itemName: req.body.itemName } } },
@@ -408,10 +408,8 @@ router.put('/user/:userEmailId/deletefromcart', jwtHelper.verifyJwtToken,(req, r
 });
 
 ///// increase quantity by 1, provide item details in the body ex.  "foodName":"Chicken Biriyani"
-router.put('/user/:userEmailId/increasequantity',jwtHelper.verifyJwtToken, (req,res,next)=>{
+router.put('/user/increasequantity/:userEmailId',jwtHelper.verifyJwtToken, (req,res,next)=>{
 
-    if (req.body.itemQuantity != 0 && req.body.itemQuantity >0) {
-        
         userInfo.findOneAndUpdate(
             {
                 email: req.params.userEmailId,
@@ -431,20 +429,13 @@ router.put('/user/:userEmailId/increasequantity',jwtHelper.verifyJwtToken, (req,
                     res.send(data);
                 }
             })
-
-    }
-    else{
-        res.send("Quantity should be greater than 0")
-    }
 });
 
 
 
 ///// decrease quantity by 1, provide item details in the body ex.  "foodName":"Chicken Biriyani"/////
-router.put('/user/:userEmailId/decreasequantity',jwtHelper.verifyJwtToken, (req,res,next)=>{
+router.put('/user/decreasequantity/:userEmailId',jwtHelper.verifyJwtToken, (req,res,next)=>{
 
-    if (req.body.itemQuantity != 0 && req.body.itemQuantity >0) {
-        
         userInfo.findOneAndUpdate(
             {
                 email: req.params.userEmailId,
@@ -464,11 +455,6 @@ router.put('/user/:userEmailId/decreasequantity',jwtHelper.verifyJwtToken, (req,
                     res.send(data);
                 }
             })
-
-    }
-    else{
-        res.send("Quantity should be greater than 0")
-    }
 });
 
 // posting data to cart. we have to pass the verification jwt token as well
@@ -481,7 +467,7 @@ router.put('/user/:userEmailId/addtocart',jwtHelper.verifyJwtToken, (req, res, n
                 cartItems: [
                     {
                         itemName: req.body.itemName,
-                        itemQuantity: req.body.itemQuantity,
+                        itemQuantity: 1,
                         itemCost: req.body.itemCost,
                         itemType: req.body.itemType,
                         productImage: req.body.productImage,

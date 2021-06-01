@@ -21,7 +21,7 @@ export class HomePageComponent implements OnInit {
   profilepicInfo: any;
   restaurantItems: any;
   showHomePage: boolean = true;
-  itemdetails: String= "";
+  itemdetails: String = "";
   addtocartitem: any;
 
   constructor(private formBuilder: FormBuilder, private userLoginService: UserLoginService, private router: Router, private homePageService: HomePageService, private _snackBar: MatSnackBar) { }
@@ -31,14 +31,23 @@ export class HomePageComponent implements OnInit {
     this.homePageService.getUserProfile().subscribe(
       (res: any) => {
         this.userDetails = res['user'];
+
+        this.getItemsFromRestaurant();
       },
       err => {
         console.log(err);
       }
     );
-    this.getItemsFromRestaurant();
     this.showHomePage = true;
 
+  }
+
+
+
+
+
+  goToHomePage(){
+    this.router.navigateByUrl('/home-page')
   }
 
   onLogout() {
@@ -109,14 +118,14 @@ export class HomePageComponent implements OnInit {
   }
 
 
-  addthisitemtocart(item : any) {
+  addthisitemtocart(item: any) {
     console.log(item);
     this.itemdetails = item;
     if (this.userLoginService.isLoggedIn()) {
 
       this.homePageService.additemtocartService(this.itemdetails, this.userDetails.email).subscribe(
         (response) => {
-          this._snackBar.open('Added successfully 😊', 'Okay', { duration: 5000 });
+          this._snackBar.open('Added ' + item.itemName + ' to cart successfully 😊', '', { duration: 5000 });
         },
         (error) => {
           console.log("Some error occured", error);
@@ -133,13 +142,13 @@ export class HomePageComponent implements OnInit {
 
   getCartItems() {
 
-    /*  if (this.userLoginService.isLoggedIn()) {
-       this.router.navigateByUrl('/home-page/cart');
-     }
-     else{
-       this.router.navigateByUrl('/signup');
-     } */
     if (this.userLoginService.isLoggedIn()) {
+      this.router.navigateByUrl('/home-page/cart');
+    }
+    else {
+      this.router.navigateByUrl('/login');
+    }
+    /* if (this.userLoginService.isLoggedIn()) {
       this.showUserProfile = false;
       this.homePageService.getCartItemsService().subscribe(
         (response: any) => {
@@ -157,7 +166,7 @@ export class HomePageComponent implements OnInit {
       this.showCart = false;
       this.showHomePage = true;
       this.router.navigateByUrl('/signup');
-    }
+    } */
   }
 
 

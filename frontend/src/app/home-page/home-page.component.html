@@ -5,13 +5,13 @@
     <!-- nav bar implementation -->
     <div class="nav-bar">
         <mat-toolbar class="mat-toolbar-navigation">
-            <span style="margin-left: 10px; cursor: pointer;" matTooltip="Food made awesome 🤤🤤🤤">
+            <span style="margin-left: 10px; cursor: pointer;" matTooltip="Food made awesome 🤤🤤🤤" (click)="goToHomePage()">
                 <img class="HBImage" aria-label="Hungry Bird" src="../../assets/Examples/homeicon.svg" alt="HB">
                 <span class="hide-for-mobile-devices HBFont">&nbsp; Hungry Bird</span>
             </span>
             <span class="nav-bar-spacer"></span>
             <span id="nameandiconSpan" [matMenuTriggerFor]="menu">
-                <span id="userFirstName" *ngIf="userDetails">Hi, {{userDetails.userName.split('
+                <span id="userFirstName" *ngIf="userDetails"  matTooltip='{{userDetails.userName}}'>Hi, {{userDetails.userName.split('
                     ')[0]}}!&nbsp;&nbsp;</span>
                 <span id="userIcon">
                     <mat-icon aria-hidden="false" aria-label="Example user face" style="position: relative; top: 5px;">
@@ -85,7 +85,7 @@
                                 <div class="typeoffood">
                                     <mat-chip-list aria-label="Category selection" style="display: inline-block;">
                                         <mat-chip style="border: 1px solid;">{{item.itemType}}</mat-chip>
-                                        <mat-chip style="border: 1px solid;">{{item.itemCost | currency:"INR":"symbol"}}</mat-chip>
+                                        <mat-chip style="border: 1px solid;">{{item.itemCost | currency:"INR":"symbol"}} per item</mat-chip>
                                       </mat-chip-list>
                                 </div>
                               </mat-card-content>
