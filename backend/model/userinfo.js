@@ -44,7 +44,7 @@ const userSignupSchema = mongoose.Schema({
     password: {
         type: String,
         required: [true, 'Password cannot be empty'],
-        minlength: [6, 'Password cannot be less than 4 letters'],
+        minlength: [6, 'Password cannot be less than 6 letters'],
         maxlength: [20, 'Password cannot be more than 20 letters']
     },
     userName: {
@@ -79,33 +79,6 @@ const userSignupSchema = mongoose.Schema({
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // Custom validation for email
 userSignupSchema.path('email').validate((val) => {
     emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -120,28 +93,28 @@ userSignupSchema.path('userPhoneNumber').validate((val) => {
 }, 'Invalid Phone number.');
 
 
-// Event for encrypting password
+// Event for encrypting password before saving the user data
 userSignupSchema.pre('save', function (next) {
     bcrypt.genSalt(10, (err, salt) => {
         bcrypt.hash(this.password, salt, (err, hash) => {
             this.password = hash;
-            this.saltSecret = salt;
+            this.saltSecret = salt; // necessary for decryption of hash
             next();
         });
     });
 });
 
 
-// Methods
+// Methods for password and token gen
 userSignupSchema.methods.verifyPassword = function(password){
-    return bcrypt.compareSync(password, this.password);
+    return bcrypt.compareSync(password, this.password); // checking if passwords match
 }
 
 userSignupSchema.methods.generateJwt = function () {
     return jwt.sign({ _id: this._id},
-        process.env.JWT_SECRET,
+        process.env.JWT_SECRET, // encrypting with the mentioned jwt secret in config.json
     {
-        expiresIn: process.env.JWT_EXP
+        expiresIn: process.env.JWT_EXP //expiration time of token
     });
 }
 

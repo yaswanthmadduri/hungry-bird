@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { FormGroup, FormControl, FormsModule, ReactiveFormsModule, Validators, FormBuilder } from '@angular/forms';
 import { UserLoginService } from './user-login.service';
 import { Router } from '@angular/router';
+import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-user-login',
   templateUrl: './user-login.component.html',
@@ -17,7 +18,7 @@ export class UserLoginComponent implements OnInit {
   loggedinSuccessfully: boolean = false;
   serverErrorMessage : String = "";
 
-  constructor(public dialog: MatDialog, private formBuilder: FormBuilder, private userloginservice: UserLoginService, private router: Router) { }
+  constructor(public dialog: MatDialog,private _snackBar: MatSnackBar, private formBuilder: FormBuilder, private userloginservice: UserLoginService, private router: Router) { }
 
   ngOnInit(): void {
     this.userLoginForm = this.formBuilder.group({
@@ -47,6 +48,9 @@ export class UserLoginComponent implements OnInit {
         (error) => {
           this.loggedinSuccessfully = false;
           this.serverErrorMessage = error.error.message;
+          this._snackBar.open('This e-mail is not registered with HungryBird!! Please Signup 😑😑😐', '', {
+            duration: 5000
+          });
           this.router.navigateByUrl('/signup');
           console.log("Some error occured", this.serverErrorMessage);
         }

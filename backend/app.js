@@ -12,12 +12,17 @@ var app = express();
 const passport = require('passport');
 
 
-//importing the route.js file, so that, all routes are transferred to it.
+//importing the routes.js file, so that, all routes are transferred to it.
 const route = require('./routes/routes');
+const signupRouter = require('./userSignup/userSignupRoutes');
+const userInfoRouter = require("./userInformation/userInfoRoutes");
+const restaurantRouter = require("./restaurantItems/restaurantRoutes");
+const cartRouter = require('./userCart/userCartRoutes');
+
 
 //connecting to mongodb
-//const connectionString = "mongodb://localhost:27017/hungrybird"
-const connectionString = "mongodb+srv://yaswanth:tknIDZPoWYFgz3Xr@hungrybirdcluster.fokxh.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+const connectionString = "mongodb://localhost:27017/hungrybird"
+//const connectionString = "mongodb+srv://yaswanth:tknIDZPoWYFgz3Xr@hungrybirdcluster.fokxh.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 mongoose.connect(connectionString,{ useUnifiedTopology: true, useNewUrlParser: true });
 mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
@@ -63,7 +68,11 @@ app.use('/uploads', express.static('uploads'));
 
 //changing the route scope to routes.js
 
-app.use('/api/', route)
+app.use('/api/', route);
+app.use('/usersignup/api/', signupRouter);
+app.use('/userinfo/api/', userInfoRouter);
+app.use('/restaurant/api/', restaurantRouter);
+app.use('/cart/api/', cartRouter);
 
 const PORT = 3000;
 
