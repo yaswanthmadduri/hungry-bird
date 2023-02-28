@@ -55,7 +55,7 @@ export class UserCartComponent implements OnInit {
     if (this.userLoginService.isLoggedIn()) {
       this.userCartService.getcartService(this.userDetails.email).subscribe(
         (response: any) => {
-          this.cartItems = response;
+          this.cartItems = response.cartItems;
           if(this.cartItems.length == 0){
             this.cartItemsExist = false
           }

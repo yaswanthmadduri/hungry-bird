@@ -59,7 +59,7 @@ export class HomePageComponent implements OnInit {
     if (this.userLoginService.isLoggedIn()) {
       this.homePageService.getItemsInRestaurantService().subscribe(
         (response: any) => {
-          this.restaurantItems = response; ////contains data from restaurant
+          this.restaurantItems = response.data; ////contains data from restaurant
           console.log(this.restaurantItems);
         },
         (error) => {

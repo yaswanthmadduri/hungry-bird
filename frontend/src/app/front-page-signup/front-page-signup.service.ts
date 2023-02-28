@@ -8,8 +8,8 @@ import { Observable } from 'rxjs';
 export class FrontPageSignupService {
 
 
-  baseURL: string = "http://localhost:3000/api/";
-  signupUser: string = "user-signup";
+  baseURL: string = "http://localhost:3000/";//try firebase
+  signupUser: string = "api/usersignup/signup";
 
   constructor( private httpClientRequest: HttpClient ) { }
 

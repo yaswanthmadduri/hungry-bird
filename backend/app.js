@@ -69,10 +69,10 @@ app.use('/uploads', express.static('uploads'));
 //changing the route scope to routes.js
 
 app.use('/api/', route);
-app.use('/usersignup/api/', signupRouter);
-app.use('/userinfo/api/', userInfoRouter);
-app.use('/restaurant/api/', restaurantRouter);
-app.use('/cart/api/', cartRouter);
+app.use('/api/usersignup', signupRouter);
+app.use('/api/userinfo/', userInfoRouter);
+app.use('/api/restaurant/', restaurantRouter);
+app.use('/api/cart/', cartRouter);
 
 const PORT = 3000;
 

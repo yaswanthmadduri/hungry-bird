@@ -155,7 +155,7 @@ module.exports = router;
 
 
 
-/* /////////////////////////// RESTAURANT FOOD PICS//////////////////////////
+ /////////////////////////// RESTAURANT FOOD PICS//////////////////////////
 
 
 const foodImagesStorage = multer.diskStorage({
@@ -184,11 +184,10 @@ const uploadFoodImages = multer({
     },
     fileFilter: foodImageUploadFileFilter
 });
- */
 
 //////////////USER PROFILE PIC/////////////
 
-/* const userProfilePicStorage = multer.diskStorage({
+ const userProfilePicStorage = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, 'uploads/userProfilePics');
     },
@@ -214,11 +213,11 @@ const uploadProfilePic = multer({
         fileSize: 1024 * 1024 * 3
     },
     fileFilter: userProfilePicTypeFilter
-}); */
+}); 
 
 /////////////////////////////////////////////////////////// RESTAURANT DATA ////////////////////////////////////////////////////////////////
 
-/* 
+
 // retrieving food available at the restaurant from database
 router.get('/restaurant/available-food-items', restaurantController.getAllItems);
 
@@ -230,10 +229,10 @@ router.post('/restaurant/add-item-to-list', jwtHelper.verifyJwtToken, uploadFood
 router.put('/restaurant/food-item-list/:itemName', restaurantController.editItem);
 
 /// delete item from itemlist
-router.delete('/restaurant/food-item-list/delete-item', restaurantController.deleteItem); */
+router.delete('/restaurant/food-item-list/delete-item', restaurantController.deleteItem); 
 
 ////////////// //////////////////////////////////////// USER INFORMATION /////////////////////// //////////////////////////////////////////
-/* 
+
 //Posting new user signup data to db.
 router.post('/user-signup', userSignupController.userSignup);
 
@@ -249,9 +248,9 @@ router.get('/user-info/get-profile-pic/:userEmailId', jwtHelper.verifyJwtToken, 
 // delete a user account
 router.delete('/user-info/delete-account/:userEmailId', jwtHelper.verifyJwtToken, userInformationController.deleteUserAccount);
 
- */
 
-/* ////////////////////////////////////////////////////////// cart  ///////////////////////////////////////////////////////////////////////////
+
+ ////////////////////////////////////////////////////////// cart  ///////////////////////////////////////////////////////////////////////////
 
 //get the cart items
 router.get('/user-info/get-cart/:userEmailId', jwtHelper.verifyJwtToken, userCartController.getCartItems);
@@ -270,5 +269,5 @@ router.put('/user/decreasequantity/:userEmailId', jwtHelper.verifyJwtToken, user
 // posting data to cart. we have to pass the verification jwt token as well
 router.put('/user/:userEmailId/addtocart', jwtHelper.verifyJwtToken, userCartController.addItemToCart);
 
- */
+ 
 

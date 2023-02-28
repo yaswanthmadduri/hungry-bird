@@ -26,7 +26,7 @@ export class HomePageService {
   }
 
   getItemsInRestaurantService(){
-    return this.httpClientRequest.get(this.baseURL + '/restaurant/available-food-items')
+    return this.httpClientRequest.get(this.baseURL + 'restaurant/available-food-items')
   }
 
   additemtocartService(itemdetails: any, userEmailId : String){
